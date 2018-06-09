@@ -33,14 +33,20 @@ namespace Pong
             if (m_bGameHasFinished)
             {
                 Console.SetCursorPosition(0, m_nRows + m_nVerticalSpacing);
-                Console.WriteLine(m_results.ShowFinal());
-                m_timer.Change(0, 0);// -- turn timer off
+                showFinal();
+                m_timer.Change(int.MaxValue, int.MaxValue);// -- turn timer off
             }
             else
             {
                 board.Draw();
-                showResult();
+                m_timer.Change(m_nSleepMs, int.MaxValue);// --- this will prevent timer callback overlapping
             }
+            showResult();
+        }
+
+        private void showFinal()
+        {
+            Console.WriteLine(m_results.ShowFinal());
         }
 
         void showResult(){
@@ -49,13 +55,14 @@ namespace Pong
         }
 
         Timer m_timer;
+        int m_nSleepMs;
 
         public void Start()
         {
             Console.CursorVisible = false;
             Board board = new Board(m_nRows, m_nCols, m_nGameEnds, m_results);
-            int nSleepMs = 1000/m_nLevel;
-            m_timer = new Timer(TimerCallback, board, 0, nSleepMs);
+            m_nSleepMs = 1000/m_nLevel;
+            m_timer = new Timer(TimerCallback, board, 0, m_nSleepMs);
 
             while (true)
             {

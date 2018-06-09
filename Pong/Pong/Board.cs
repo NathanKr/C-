@@ -38,7 +38,7 @@ namespace Pong
         {
             m_results = results;
             m_nGameEnds = nGameEnds;
-            int nPlayerWidth = 2, nPlayerHeight = nRows / 2, nPlayerDistanceX = 2;
+            int nPlayerWidth = 2, nPlayerHeight = nRows / 3, nPlayerDistanceX = 2;
             m_nHorizontalCycles = (uint)Math.Round((float)nCols / nRows);// try to get better angle
 
             m_nRows = nRows;
