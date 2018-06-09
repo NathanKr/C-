@@ -29,27 +29,12 @@
 </ul>
 
 <h2>Show me some code</h2>
-```c
+```csharp
 static void Main(string[] args)
         {
             const int nRows = 20, nCols = 40 , nLevel=20 , nGameEnds = 2;
             Game game = new Game(nRows , nCols , nLevel, nGameEnds);
             game.Start();
-        }
-
-
- void TimerCallback(object state){
-            Board board = (Board)state;
-            board.HandleLogic(out m_bGameHasFinished);
-            if (m_bGameHasFinished){
-                showFinalResult();
-                turnTimerOff();
-            }
-            else{
-                board.Draw();
-                scheduleNextTimerCycle();// --- this will prevent timer callback overlapping
-            }
-            showCurrentResult();
         }
 ```
 
