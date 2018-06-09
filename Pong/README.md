@@ -29,7 +29,9 @@
 </ul>
 
 <h2>Show me some code</h2>
-```C#
+
+```c
+
 static void Main(string[] args)
         {
             const int nRows = 20, nCols = 40 , nLevel=20 , nGameEnds = 2;
@@ -50,6 +52,7 @@ void TimerCallback(object state){
             }
             showCurrentResult();
         }
+
 ```
 
 
