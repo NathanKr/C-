@@ -30,26 +30,34 @@ namespace Pong
         void TimerCallback(object state){
             Board board = (Board)state;
             board.HandleLogic(out m_bGameHasFinished);
-            if (m_bGameHasFinished)
-            {
-                Console.SetCursorPosition(0, m_nRows + m_nVerticalSpacing);
-                showFinal();
-                m_timer.Change(int.MaxValue, int.MaxValue);// -- turn timer off
+            if (m_bGameHasFinished){
+                showFinalResult();
+                turnTimerOff();
             }
-            else
-            {
+            else{
                 board.Draw();
-                m_timer.Change(m_nSleepMs, int.MaxValue);// --- this will prevent timer callback overlapping
+                scheduleNextTimerCycle();// --- this will prevent timer callback overlapping
             }
-            showResult();
+            showCurrentResult();
         }
 
-        private void showFinal()
+        private bool scheduleNextTimerCycle()
         {
+            return m_timer.Change(m_nSleepMs, int.MaxValue);
+        }
+
+        private bool turnTimerOff()
+        {
+            return m_timer.Change(int.MaxValue, int.MaxValue);
+        }
+
+        private void showFinalResult()
+        {
+            Console.SetCursorPosition(0, m_nRows + m_nVerticalSpacing);
             Console.WriteLine(m_results.ShowFinal());
         }
 
-        void showResult(){
+        void showCurrentResult(){
             Console.SetCursorPosition(m_nCols + m_nHorizonatalSpacing,  m_nRows / 2);
             Console.Write(m_results.ShowCurrent());
         }
