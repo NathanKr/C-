@@ -28,14 +28,13 @@ namespace Pong
 
 
         void TimerCallback(object state){
-            Board board = (Board)state;
-            board.HandleLogic(out m_bGameHasFinished);
+            m_board.HandleLogic(out m_bGameHasFinished);
             if (m_bGameHasFinished){
                 showFinalResult();
                 turnTimerOff();
             }
             else{
-                board.Draw();
+                m_board.Draw();
                 scheduleNextTimerCycle();// --- this will prevent timer callback overlapping
             }
             showCurrentResult();
@@ -64,13 +63,14 @@ namespace Pong
 
         Timer m_timer;
         int m_nSleepMs;
+        Board m_board;
 
         public void Start()
         {
             Console.CursorVisible = false;
-            Board board = new Board(m_nRows, m_nCols, m_nGameEnds, m_results);
+            m_board = new Board(m_nRows, m_nCols, m_nGameEnds, m_results);
             m_nSleepMs = 1000/m_nLevel;
-            m_timer = new Timer(TimerCallback, board, 0, m_nSleepMs);
+            m_timer = new Timer(TimerCallback, null, 0, m_nSleepMs);
 
             while (true)
             {
@@ -78,15 +78,15 @@ namespace Pong
                 switch (info.Key)
                 {
                     case ConsoleKey.DownArrow:
-                        if (board.HumanPlayer.AllowMoveDown()){
-                            board.HumanPlayer.MoveDown();
+                        if (m_board.HumanPlayer.AllowMoveDown()){
+                            m_board.HumanPlayer.MoveDown();
                         }
                         
                         break;
 
                     case ConsoleKey.UpArrow:
-                        if(board.HumanPlayer.AllowMoveUp()){
-                            board.HumanPlayer.MoveUp();
+                        if(m_board.HumanPlayer.AllowMoveUp()){
+                            m_board.HumanPlayer.MoveUp();
                         }
                         break;
                 }

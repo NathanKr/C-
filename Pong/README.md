@@ -30,7 +30,7 @@
 
 <h2>Show me some code</h2>
 
-```c
+```csharp
 
 static void Main(string[] args)
         {
