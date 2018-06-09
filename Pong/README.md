@@ -29,7 +29,7 @@
 </ul>
 
 <h2>Show me some code</h2>
-```csharp
+```c
 static void Main(string[] args)
         {
             const int nRows = 20, nCols = 40 , nLevel=20 , nGameEnds = 2;
