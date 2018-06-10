@@ -28,6 +28,60 @@
 <li>Use of Shape abstraction and ICollide interface makes the design simple and easy to understand and maintain</li>
 </ul>
 
+<h2>important entities</h2>
+<table border=1>
+<tr>
+<th>Entity</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>Game</td>
+<td>Class</td>
+<td>Game manager</td>
+</tr>
+<tr>
+<td>Board</td>
+<td>Class</td>
+<td>Pseudu canvas</td>
+</tr>
+<tr>
+<td>Shape</td>
+<td>Abstract class</td>
+<td>Base class for all shapes</td>
+</tr>
+<tr>
+<td>Border</td>
+<td>Class</td>
+<td>Border of board</td>
+</tr>
+<tr>
+<td>Ball</td>
+<td>Class</td>
+<td>Ball in game</td>
+</tr>
+
+<tr>
+<td>PlayerAuto</td>
+<td>Class</td>
+<td>Auotmatic player driven by simple algorithm</td>
+</tr>
+<tr>
+<td>PlayerHuman</td>
+<td>Class</td>
+<td>Human player driven by arrows : UP,DOWN,RIGHT,LEFT</td>
+</tr>
+
+<tr>
+<td>ICollide</td>
+<td>Interface</td>
+<td>Interface which is inherited by shapes which collide with the ball</td>
+</tr>
+
+
+</table>
+
+
 <h2>Show me some code</h2>
 
 ```csharp
