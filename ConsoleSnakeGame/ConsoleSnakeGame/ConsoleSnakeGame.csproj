@@ -44,12 +44,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Apple.cs" />
+    <Compile Include="Board.cs" />
+    <Compile Include="BoardInfo.cs" />
+    <Compile Include="ColorChar.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Snake.cs" />
     <Compile Include="SnakeGame.cs" />
+    <Compile Include="SnakeInfo.cs" />
     <Compile Include="UserInput.cs" />
   </ItemGroup>
   <ItemGroup>

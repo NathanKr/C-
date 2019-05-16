@@ -1,48 +1,21 @@
 ﻿using System;
-using System.Threading;
+using System.Diagnostics;
+
 namespace ConsoleSnakeGame
 {
     class Program
     {
-        static void testSnakeClass()
-        {
-            Snake snake = new Snake(
-                new Point(5, 5),
-                new Point(0, 0),
-                new Point(10, 10),
-                'O',
-                'x');
-
-            snake.Write();
-            Sleep();
-
-
-            snake.Move(Direction.Right);
-            snake.Write();
-            Sleep();
-
-            snake.Move(Direction.Left);
-            snake.Write();
-            Sleep();
-
-            snake.Move(Direction.Up);
-            snake.Write();
-            Sleep();
-
-            snake.Move(Direction.Down);
-            snake.Write();
-            Sleep();
-        }
-
-        static void Sleep()
-        {
-            Thread.Sleep(1000);
-        }
-
         static void Main(string[] args)
         {
-            Console.CursorVisible = false;
-            testSnakeClass();
+            int nSleepTimeMs = 100;
+            BoardInfo boardInfo = new BoardInfo(new Point(0, 0) , new Point(100, 20),'.');
+            SnakeInfo snakeInfo = new SnakeInfo(
+                new Point(5, 5), 
+                new ColorChar('O',ConsoleColor.Blue,ConsoleColor.Cyan), 
+                new ColorChar('x',ConsoleColor.DarkGreen,ConsoleColor.Red));
+            SnakeGame game = new SnakeGame(nSleepTimeMs, boardInfo, snakeInfo);
+
+            game.Start();
         }
     }
 }

@@ -10,19 +10,18 @@ namespace ConsoleSnakeGame
     {
         public Snake(
             Point snakeHead, 
-            Point boardTopLeft, 
-            Point boardBottomRight,
-            char cHead, 
-            char cTail)
+            ColorChar colorHead, 
+            ColorChar colorTail)
         {
             body = new List<Point>();
             body.Add(snakeHead);
-            this.boardTopLeft = boardTopLeft;
-            this.boardBottomRight = boardBottomRight;
-            this.cHead = cHead;
-            this.cTail = cTail;
+            this.colorHead = colorHead;
+            this.colorTail = colorTail;
             Console.SetCursorPosition(snakeHead.x, snakeHead.y);
-            Console.Write(cHead);
+            Console.BackgroundColor = colorHead.backgroundColor;
+            Console.ForegroundColor = colorHead.color;
+            Console.Write(colorHead.text);
+            Console.ResetColor();
         }
 
         public void Grow()
@@ -73,8 +72,7 @@ namespace ConsoleSnakeGame
         }
 
         private List<Point> body;
-        private Point boardTopLeft,boardBottomRight;
-        private char cHead, cTail;
+        private ColorChar colorHead, colorTail;
         Direction newDirection;
     }
 }
