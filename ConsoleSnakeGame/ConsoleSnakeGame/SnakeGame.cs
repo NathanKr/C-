@@ -9,12 +9,12 @@ namespace ConsoleSnakeGame
 {
     class SnakeGame
     {
-        public SnakeGame(int nSleepTimeMs , BoardInfo boardInfo , SnakeInfo snakeInfo)
+        public SnakeGame(int nSleepTimeMs , BoardInfo boardInfo , SnakeInfo snakeInfo , ColorChar appleInfo)
         {
             Console.CursorVisible = false;
             this.nSleepTimeMs = nSleepTimeMs;
             board = new Board(boardInfo.boardTopLeft , boardInfo.boardBottomRight, boardInfo.cBorder);
-
+            this.appleInfo = appleInfo;
             snake = new Snake(
                 snakeInfo.snakeHead,
                snakeInfo.colorHead,
@@ -25,6 +25,8 @@ namespace ConsoleSnakeGame
         {
             Direction direction = Direction.Right;
             gameIsOver = false;
+            apple = null; // may be usefull for restart
+            needNewApplePosition = true;
 
             board.Write();
 
@@ -34,22 +36,56 @@ namespace ConsoleSnakeGame
                 snake.Move(direction);
                 snake.Write();
 
-                // todo implement and remove remark handleApple();
-
                 getUserInputDirection(ref direction);
 
-                // todo implement and remove remark handleSnakeCollisions();
+                handleSnakeCollisions();
+
+                handleApple();
             }
         }
 
         private void handleApple()
         {
-            throw new NotImplementedException();
+            if (needNewApplePosition)
+            {
+                Point newApplePosition;
+                do
+                {
+                    newApplePosition = Utils.GetRandPoint(board.BoardTopLeft, board.BoardBottomRight);
+                } while (snake.IsCollision(newApplePosition));
+
+                if (apple == null)
+                {
+                    apple = new Apple(newApplePosition, appleInfo);
+                }
+
+                apple.Move(newApplePosition);
+                apple.Write();
+
+                needNewApplePosition = false;
+            }
         }
 
         private void handleSnakeCollisions()
         {
-           throw new NotImplementedException();
+            SnakeCollision? collision = getSnakeCollisions();
+
+            if (collision.HasValue)
+            {
+                switch (collision)
+                {
+                    case SnakeCollision.Apple:
+                        needNewApplePosition = true;
+                        break;
+
+                    case SnakeCollision.Border:
+                        gameIsOver = true;
+                        break;
+
+                    default:
+                        throw (new Exception($"Unepected collision : {collision}"));
+                }
+            }
         }
 
         SnakeCollision ? getSnakeCollisions()
@@ -74,12 +110,12 @@ namespace ConsoleSnakeGame
 
         private bool snakeCollisionWithBorder()
         {
-            throw new NotImplementedException();
+            return board.IsCollision(snake.Head);
         }
 
         private bool snakeCollisionWithApple()
         {
-            throw new NotImplementedException();
+            return (apple != null) ? snake.IsCollision(apple.Head) : false; 
         }
 
         void getUserInputDirection(ref Direction direction)
@@ -94,6 +130,9 @@ namespace ConsoleSnakeGame
         private int nSleepTimeMs;
         private Snake snake;
         private Board board;
+        private Apple apple;
+        private ColorChar appleInfo;
         private bool gameIsOver;
+        private bool needNewApplePosition;
     }
 }

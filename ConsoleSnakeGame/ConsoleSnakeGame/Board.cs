@@ -10,23 +10,23 @@ namespace ConsoleSnakeGame
     {
         public Board(Point boardTopLeft, Point boardBottomRight , char cBorder)
         {
-            this.boardTopLeft = boardTopLeft;
-            this.boardBottomRight = boardBottomRight;
+            this.BoardTopLeft = boardTopLeft;
+            this.BoardBottomRight = boardBottomRight;
             this.cBorder = cBorder;
         }
 
         public void Write()
         {
             // --- write rows
-            Point boardBottomLeft = new Point(boardTopLeft.x, boardBottomRight.y);
-            int width = boardBottomRight.x - boardTopLeft.x + 1;
-            writeRow(boardTopLeft, width);
+            Point boardBottomLeft = new Point(BoardTopLeft.x, BoardBottomRight.y);
+            int width = BoardBottomRight.x - BoardTopLeft.x + 1;
+            writeRow(BoardTopLeft, width);
             writeRow(boardBottomLeft, width);
 
             // --- write cols
-            Point boardTopRight = new Point(boardBottomRight.x, boardTopLeft.y);
-            int height = boardBottomRight.y - boardTopLeft.y + 1;
-            writeCol(boardTopLeft, height);
+            Point boardTopRight = new Point(BoardBottomRight.x, BoardTopLeft.y);
+            int height = BoardBottomRight.y - BoardTopLeft.y + 1;
+            writeCol(BoardTopLeft, height);
             writeCol(boardTopRight, height);
         }
 
@@ -48,7 +48,22 @@ namespace ConsoleSnakeGame
             }
         }
 
-        Point boardTopLeft, boardBottomRight;
+        public Point BoardTopLeft { get; }
+        public Point BoardBottomRight { get; }
+
         char cBorder;
+
+        public bool IsCollision(Point point)
+        {
+            bool left_or_right_Collision, top_or_bottom_Collision ;
+
+            left_or_right_Collision = (point.x == BoardTopLeft.x || point.x == BoardBottomRight.x) && 
+                (point.y >= BoardTopLeft.y && point.y <= BoardBottomRight.y);
+
+            top_or_bottom_Collision = (point.y == BoardTopLeft.y || point.y == BoardBottomRight.y) &&
+                (point.x >= BoardTopLeft.x && point.x <= BoardBottomRight.x);
+
+            return (left_or_right_Collision || top_or_bottom_Collision);
+        }
     }
 }

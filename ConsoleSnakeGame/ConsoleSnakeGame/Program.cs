@@ -7,13 +7,14 @@ namespace ConsoleSnakeGame
     {
         static void Main(string[] args)
         {
-            int nSleepTimeMs = 100;
+            int nSleepTimeMs = 200;
+            ColorChar appleInfo = new ColorChar('@', ConsoleColor.Red, ConsoleColor.DarkYellow);
             BoardInfo boardInfo = new BoardInfo(new Point(0, 0) , new Point(100, 20),'.');
             SnakeInfo snakeInfo = new SnakeInfo(
                 new Point(5, 5), 
                 new ColorChar('O',ConsoleColor.Blue,ConsoleColor.Cyan), 
                 new ColorChar('x',ConsoleColor.DarkGreen,ConsoleColor.Red));
-            SnakeGame game = new SnakeGame(nSleepTimeMs, boardInfo, snakeInfo);
+            SnakeGame game = new SnakeGame(nSleepTimeMs, boardInfo, snakeInfo, appleInfo);
 
             game.Start();
         }

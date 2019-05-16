@@ -8,26 +8,27 @@ namespace ConsoleSnakeGame
 {
     class Apple
     {
-        public Apple(Point head , ColorChar colorHead)
+        public Apple(Point head, ColorChar colorHead)
         {
             this.colorHead = colorHead;
-            prevHead = null;
-            this.head = head;
-            Console.SetCursorPosition(head.x, head.y);
+            this.Head = head;
+            prevHead = head;
+            colorHead.Write(head);
         }
 
         public void Write()
         {
-            Console.MoveBufferArea(prevHead.x, prevHead.y, 1, 1, head.x, head.y);
+            Console.MoveBufferArea(prevHead.x, prevHead.y, 1, 1, Head.x, Head.y);
         }
 
         public void Move(Point newPoint)
         {
-            prevHead = head;
-            head = newPoint;
+            prevHead = Head;
+            Head = newPoint;
         }
 
-        private Point head , prevHead;
-        ColorChar colorHead;
+        public Point Head { get; private set; }
+        private Point prevHead;
+        private ColorChar colorHead;
     }
 }

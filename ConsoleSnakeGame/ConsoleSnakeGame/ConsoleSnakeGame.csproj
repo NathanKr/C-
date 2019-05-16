@@ -51,11 +51,13 @@
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Results.cs" />
     <Compile Include="Snake.cs" />
     <Compile Include="SnakeCollision.cs" />
     <Compile Include="SnakeGame.cs" />
     <Compile Include="SnakeInfo.cs" />
     <Compile Include="UserInput.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -9,8 +9,8 @@ namespace ConsoleSnakeGame
     class Snake
     {
         public Snake(
-            Point snakeHead, 
-            ColorChar colorHead, 
+            Point snakeHead,
+            ColorChar colorHead,
             ColorChar colorTail)
         {
             body = new List<Point>();
@@ -26,12 +26,29 @@ namespace ConsoleSnakeGame
 
         }
 
+        public bool IsCollision(Point point)
+        {
+            bool isPlaceUsed = false;
+            // ---- go over body
+            foreach (Point item in body)
+            {
+                // --- this is NOT same as == because this is an object
+                if (item.Equals(point))
+                {
+                    isPlaceUsed = true;
+                    break;
+                }
+            }
+
+            return isPlaceUsed;
+        }
+
         public void Write()
         {
             //todo nath handle also tail
-            int sourceLeft = body[0].x, 
+            int sourceLeft = body[0].x,
                 sourceTop = body[0].y,
-                sourceWidth = 1, 
+                sourceWidth = 1,
                 sourceHeight = 1;
 
 
@@ -55,7 +72,7 @@ namespace ConsoleSnakeGame
 
                 default:
                     throw (new Exception($"Unexpected direction : {newDirection}"));
-            }        
+            }
 
             Console.MoveBufferArea(
                 sourceLeft, sourceTop,
@@ -67,6 +84,8 @@ namespace ConsoleSnakeGame
         {
             newDirection = direction;
         }
+
+        public Point Head { get { return body[0]; } }
 
         private List<Point> body;
         private ColorChar colorHead, colorTail;
