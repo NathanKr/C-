@@ -17,11 +17,8 @@ namespace ConsoleSnakeGame
             body.Add(snakeHead);
             this.colorHead = colorHead;
             this.colorTail = colorTail;
-            Console.SetCursorPosition(snakeHead.x, snakeHead.y);
-            Console.BackgroundColor = colorHead.backgroundColor;
-            Console.ForegroundColor = colorHead.color;
-            Console.Write(colorHead.text);
-            Console.ResetColor();
+
+            colorHead.Write(snakeHead);
         }
 
         public void Grow()

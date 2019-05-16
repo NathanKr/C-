@@ -24,26 +24,76 @@ namespace ConsoleSnakeGame
         public void Start()
         {
             Direction direction = Direction.Right;
-            Direction? input;
+            gameIsOver = false;
 
             board.Write();
 
-            while (true)
+            while (!gameIsOver)
             {
                 Thread.Sleep(nSleepTimeMs);
                 snake.Move(direction);
                 snake.Write();
-                input = UserInput.GetDirection();
 
-                if (input.HasValue)
-                {
-                    direction = input.Value;
-                }
+                // todo implement and remove remark handleApple();
+
+                getUserInputDirection(ref direction);
+
+                // todo implement and remove remark handleSnakeCollisions();
+            }
+        }
+
+        private void handleApple()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void handleSnakeCollisions()
+        {
+           throw new NotImplementedException();
+        }
+
+        SnakeCollision ? getSnakeCollisions()
+        {
+            SnakeCollision? collision;
+
+            if (snakeCollisionWithApple())
+            {
+                collision = SnakeCollision.Apple;
+            }
+            else if(snakeCollisionWithBorder())
+            {
+                collision = SnakeCollision.Border;
+            }
+            else
+            {
+                collision = null;
+            }
+
+            return collision;
+        }
+
+        private bool snakeCollisionWithBorder()
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool snakeCollisionWithApple()
+        {
+            throw new NotImplementedException();
+        }
+
+        void getUserInputDirection(ref Direction direction)
+        {
+            Direction? input = UserInput.GetDirection();
+            if (input.HasValue)
+            {
+                direction = input.Value;
             }
         }
 
         private int nSleepTimeMs;
-        Snake snake;
-        Board board;
+        private Snake snake;
+        private Board board;
+        private bool gameIsOver;
     }
 }

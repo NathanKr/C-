@@ -8,9 +8,9 @@ namespace ConsoleSnakeGame
 {
     class Apple
     {
-        public Apple(Point head , char cHead)
+        public Apple(Point head , ColorChar colorHead)
         {
-            this.cHead = cHead;
+            this.colorHead = colorHead;
             prevHead = null;
             this.head = head;
             Console.SetCursorPosition(head.x, head.y);
@@ -28,6 +28,6 @@ namespace ConsoleSnakeGame
         }
 
         private Point head , prevHead;
-        char cHead;
+        ColorChar colorHead;
     }
 }
