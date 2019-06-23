@@ -17,6 +17,7 @@ namespace ConsoleSnakeGame
             SnakeGame game = new SnakeGame(nSleepTimeMs, boardInfo, snakeInfo, appleInfo);
 
             game.Start();
+            Console.ReadKey();
         }
     }
 }

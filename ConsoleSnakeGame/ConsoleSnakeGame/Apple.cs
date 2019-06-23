@@ -18,7 +18,7 @@ namespace ConsoleSnakeGame
 
         public void Write()
         {
-            Console.MoveBufferArea(prevHead.x, prevHead.y, 1, 1, Head.x, Head.y);
+            colorHead.Write(Head);
         }
 
         public void Move(Point newPoint)

@@ -20,34 +20,18 @@ namespace ConsoleSnakeGame
             // --- write rows
             Point boardBottomLeft = new Point(BoardTopLeft.x, BoardBottomRight.y);
             int width = BoardBottomRight.x - BoardTopLeft.x + 1;
-            writeRow(BoardTopLeft, width);
-            writeRow(boardBottomLeft, width);
+            Utils.WriteRow(BoardTopLeft, width, cBorder);
+            Utils.WriteRow(boardBottomLeft, width, cBorder);
 
             // --- write cols
             Point boardTopRight = new Point(BoardBottomRight.x, BoardTopLeft.y);
             int height = BoardBottomRight.y - BoardTopLeft.y + 1;
-            writeCol(BoardTopLeft, height);
-            writeCol(boardTopRight, height);
+            Utils.WriteCol(BoardTopLeft, height,cBorder);
+            Utils.WriteCol(boardTopRight, height, cBorder);
         }
 
-        private void writeCol(Point start, int length)
-        {
-            for (int i = 0; i < length; i++)
-            {
-                Console.SetCursorPosition(start.x, start.y+i);
-                Console.Write(cBorder);
-            }
-        }
 
-        private void writeRow(Point start , int length)
-        {
-            Console.SetCursorPosition(start.x, start.y);
-            for (int i = 0; i < length; i++)
-            {
-                Console.Write(cBorder);
-            }
-        }
-
+        
         public Point BoardTopLeft { get; }
         public Point BoardBottomRight { get; }
 

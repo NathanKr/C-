@@ -33,7 +33,7 @@ namespace ConsoleSnakeGame
             foreach (Point item in body)
             {
                 // --- this is NOT same as == because this is an object
-                if (item.Equals(point))
+                if ((item.x == point.x) && (item.y == point.y))
                 {
                     isPlaceUsed = true;
                     break;
@@ -52,7 +52,7 @@ namespace ConsoleSnakeGame
                 sourceHeight = 1;
 
 
-            switch (newDirection)
+            switch (direction)
             {
                 case Direction.Down:
                     body[0].y++;
@@ -71,7 +71,7 @@ namespace ConsoleSnakeGame
                     break;
 
                 default:
-                    throw (new Exception($"Unexpected direction : {newDirection}"));
+                    throw (new Exception($"Unexpected direction : {direction}"));
             }
 
             Console.MoveBufferArea(
@@ -82,13 +82,13 @@ namespace ConsoleSnakeGame
 
         public void Move(Direction direction)
         {
-            newDirection = direction;
+            this.direction = direction;
         }
 
         public Point Head { get { return body[0]; } }
 
         private List<Point> body;
         private ColorChar colorHead, colorTail;
-        Direction newDirection;
+        Direction direction;
     }
 }

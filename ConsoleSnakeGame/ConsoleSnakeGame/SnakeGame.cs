@@ -11,10 +11,14 @@ namespace ConsoleSnakeGame
     {
         public SnakeGame(int nSleepTimeMs , BoardInfo boardInfo , SnakeInfo snakeInfo , ColorChar appleInfo)
         {
+            int resultMargin = 2;
             Console.CursorVisible = false;
             this.nSleepTimeMs = nSleepTimeMs;
             board = new Board(boardInfo.boardTopLeft , boardInfo.boardBottomRight, boardInfo.cBorder);
             this.appleInfo = appleInfo;
+            result = new Result(new Point(
+                boardInfo.boardTopLeft.x+ resultMargin,
+                boardInfo.boardBottomRight.y+resultMargin));
             snake = new Snake(
                 snakeInfo.snakeHead,
                snakeInfo.colorHead,
@@ -27,20 +31,32 @@ namespace ConsoleSnakeGame
             gameIsOver = false;
             apple = null; // may be usefull for restart
             needNewApplePosition = true;
+            shouldGrow = false;
 
             board.Write();
 
             while (!gameIsOver)
             {
                 Thread.Sleep(nSleepTimeMs);
-                snake.Move(direction);
-                snake.Write();
+
+                handleSnake(direction);
 
                 getUserInputDirection(ref direction);
 
                 handleSnakeCollisions();
 
                 handleApple();
+            }
+        }
+
+        private void handleSnake(Direction direction)
+        {
+            snake.Move(direction);
+            snake.Write();
+            if (shouldGrow)
+            {
+                snake.Grow();
+                shouldGrow = false;
             }
         }
 
@@ -76,10 +92,12 @@ namespace ConsoleSnakeGame
                 {
                     case SnakeCollision.Apple:
                         needNewApplePosition = true;
+                        result.Show("Snake hit snake -> snake grow");
                         break;
 
                     case SnakeCollision.Border:
                         gameIsOver = true;
+                        result.Show("Snake hit border - Game is over -> you lose");
                         break;
 
                     default:
@@ -131,8 +149,10 @@ namespace ConsoleSnakeGame
         private Snake snake;
         private Board board;
         private Apple apple;
+        private Result result;
         private ColorChar appleInfo;
         private bool gameIsOver;
         private bool needNewApplePosition;
+        private bool shouldGrow;
     }
 }
