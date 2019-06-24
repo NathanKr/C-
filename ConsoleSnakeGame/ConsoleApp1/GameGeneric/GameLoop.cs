@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleApp1.GameGeneric;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -10,23 +11,24 @@ namespace ConsoleApp1
         protected bool gameEnd = false;
         public const int TARGET_FPS = 60;
         public const float TIME_UNTIL_UPDATE_SEC = 1f / TARGET_FPS;
+        GameTime gameTime = new GameTime();
 
         public void Run()
         {
             Initialize();
             Stopwatch stopWatch = new Stopwatch();
-            float totalTimeBeforeUpdateSec;
 
             stopWatch.Start();
             while (!gameEnd)
             {
                 HandleUserInputs();
-                totalTimeBeforeUpdateSec = (float)stopWatch.ElapsedMilliseconds / 1000;
-                if (totalTimeBeforeUpdateSec > TIME_UNTIL_UPDATE_SEC)
+                gameTime.ElaspedSienceLastUpdateSec = (float)stopWatch.ElapsedMilliseconds / 1000;
+                gameTime.TotalTimeSec += gameTime.ElaspedSienceLastUpdateSec;
+                if (gameTime.ElaspedSienceLastUpdateSec > TIME_UNTIL_UPDATE_SEC)
                 {
-                    Console.WriteLine(totalTimeBeforeUpdateSec);
+                    //Console.WriteLine(gameTime.ElaspedSienceLastUpdateSec);
                     stopWatch.Restart();
-                    Update();
+                    Update(gameTime);
                     Draw();
                 }
             }
@@ -35,7 +37,7 @@ namespace ConsoleApp1
 
         public abstract void HandleUserInputs();
 
-        public abstract void Update();
+        public abstract void Update(GameTime gameTime);
 
         public abstract void Draw();
     }

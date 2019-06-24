@@ -9,10 +9,16 @@ namespace ConsoleApp1.GameGeneric
         /// <summary>
         /// Logic
         /// </summary>
-        void Update();
+        void Update(GameTime gameTime);
         /// <summary>
         /// Render
         /// </summary>
         void Draw();
+
+        /// <summary>
+        /// true means that position is changes
+        /// false means that position is not changes
+        /// </summary>
+        bool IsDirty { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ConsoleApp1;
 
 namespace UnitTestSnake
 {
@@ -8,6 +9,9 @@ namespace UnitTestSnake
         [TestMethod]
         public void TestMethod1()
         {
+            Point p1 = new Point(2,3);
+            Point p2 = new Point(2, 3);
+            Assert.IsTrue(p1.IsEqual(p2));
         }
     }
 }
