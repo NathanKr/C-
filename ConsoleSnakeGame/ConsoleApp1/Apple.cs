@@ -7,26 +7,19 @@ namespace ConsoleApp1
 {
     class Apple : IGameObject 
     {
-        public Apple(ColorChar colorHead)
+        public Apple(Point head, ColorChar colorHead)
         {
             this.colorHead = colorHead;
-            //this.Head = head;
-            //prevHead = head;
-            //colorHead.Write(head);
+            Head = head;
         }
 
-
-        public bool IsDirty
+        public bool IsCollision(Point point)
         {
-            get
-            {
-                return m_bIsDirty;
-            }
-            set
-            {
-                m_bIsDirty = value;
-            }
+            return Head.IsEqual(point);
         }
+
+        public bool IsDirty { set; get; }
+
 
         public void Draw()
         {
@@ -39,9 +32,7 @@ namespace ConsoleApp1
             //todo implement
         }
 
-        private bool m_bIsDirty;
         public Point Head { get; set; }
-        private Point prevHead;
         private ColorChar colorHead;
     }
 }

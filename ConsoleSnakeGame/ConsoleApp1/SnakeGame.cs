@@ -7,75 +7,78 @@ namespace ConsoleApp1
 {
     class SnakeGame : GameLoop
     {
-        /*public SnakeGame(int nSleepTimeMs, BoardInfo boardInfo, SnakeInfo snakeInfo, ColorChar appleInfo)
+        public SnakeGame(BoardInfo boardInfo, SnakeInfo snakeInfo, AppleInfo appleInfo)
         {
-            int resultMargin = 2;
-            Console.CursorVisible = false;
-            this.nSleepTimeMs = nSleepTimeMs;
-            board = new Board(boardInfo.boardTopLeft, boardInfo.boardBottomRight, boardInfo.cBorder);
-            this.appleInfo = appleInfo;
-            result = new Result(new Point(
-                boardInfo.boardTopLeft.x + resultMargin,
-                boardInfo.boardBottomRight.y + resultMargin));
-            snake = new Snake(
-                snakeInfo.snakeHead,
-               snakeInfo.colorHead,
-               snakeInfo.colorTail);
-        }*/
+            m_listGameObjects = new List<IGameObject>();
 
-
-        public SnakeGame(BoardInfo boardInfo, SnakeInfo snakeInfo, ColorChar appleInfo)
-        {
-            listGameObjects = new List<IGameObject>();
             m_border = new Border(
                 boardInfo.boardTopLeft, 
                 boardInfo.boardBottomRight, 
                 boardInfo.cBorder);
+
             m_snake = new Snake(
                 snakeInfo.snakeHead,
                snakeInfo.colorHead,
                snakeInfo.colorTail);
-            m_apple = new Apple(appleInfo);
-            m_results = new Results();
-            listGameObjects.Add(m_border);
-            listGameObjects.Add(m_apple);
-            listGameObjects.Add(m_snake);
-            listGameObjects.Add(m_results);
+
+            m_apple = new Apple(appleInfo.Head , appleInfo.ColorHead);
+
+            m_results = new Results(new Point(
+                boardInfo.boardTopLeft.x + resultMargin,
+                boardInfo.boardBottomRight.y + resultMargin));
+
+            m_listGameObjects.Add(m_border);
+            m_listGameObjects.Add(m_apple);
+            m_listGameObjects.Add(m_snake);
+            // --- result must be at the end so it can handle gameEnd
+            m_listGameObjects.Add(m_results);
+
+            userInput = new UserInputComponent();
         }
 
         public override void Draw()
         {
-            foreach (IGameObject gameObject in listGameObjects)
+            foreach (IGameObject gameObject in m_listGameObjects)
             {
                 if (gameObject.IsDirty)
                 {
                     gameObject.Draw();
+                    gameObject.IsDirty = false;
                 }
-            }
-
-            if (m_border.IsDirty)
-            {
-                // --- do it once because border is is not moving
-                m_border.IsDirty = false;//
             }
         }
 
         public override void HandleUserInputs()
         {
-            //todo implement
+            m_directionSnakeHead = userInput.GetDirection();
+            if (m_directionSnakeHead.HasValue)
+            {
+                // --- direty is handled inside
+                m_snake.Direction = m_directionSnakeHead.Value;
+            }
         }
 
         public override void Initialize()
         {
-            // --- snake and apple position
-            // --- add border , snake and apple
             m_border.IsDirty = m_apple.IsDirty = m_snake.IsDirty = true;
         }
 
-        SnakeCollision ? checkCollisionWithSnake()
+        bool isCollision(Point point)
         {
-            SnakeCollision? collision = null;
+            return checkCollision(point).HasValue;
+        }
 
+        SnakeCollision ? checkCollision(Point point)
+        {
+            SnakeCollision ? collision = null;
+            if (m_apple.IsCollision(point))
+            {
+                collision = SnakeCollision.Apple;
+            }
+            else if (m_border.IsCollision(point))
+            {
+                collision = SnakeCollision.Border;
+            }
             /* todo implement
              * check colision of snake with self , snake with border and snake with apple if exist
              */
@@ -85,7 +88,7 @@ namespace ConsoleApp1
 
         public override void Update(GameTime gameTime)
         {
-            SnakeCollision ? collision = checkCollisionWithSnake();
+            SnakeCollision ? collision = checkCollision(m_snake.Head);
 
             if (collision.HasValue)
             {
@@ -93,22 +96,57 @@ namespace ConsoleApp1
             }
             else
             {
-                foreach (IGameObject gameObject in listGameObjects)
+                foreach (IGameObject gameObject in m_listGameObjects)
                 {
                     gameObject.Update(gameTime);
                 }
             }
         }
 
-        private void handleCollisionWithSnake(SnakeCollision value)
+        private void handleCollisionWithSnake(SnakeCollision collision)
         {
-            //todo implement
+            switch (collision)
+            {
+                case SnakeCollision.Apple:
+                    // --- todo notice that new position can be same as snake , fix this !!!!!!
+                    Point topLeftInsideBorder =
+                        new Point(m_border.TopLeft.x + 1, m_border.TopLeft.y + 1);
+                    Point bottomRightInsideBorder =
+                        new Point(m_border.BottomRight.x - 1, m_border.BottomRight.y - 1);
+                    m_apple.Head = Utils.GetRandPoint(topLeftInsideBorder, bottomRightInsideBorder);
+                    m_apple.IsDirty = true;//todo do inside ???
+                    Point possibleSnakeTailPoint = m_snake.Grow();
+                    if (isCollision(possibleSnakeTailPoint))
+                    {
+                        // --- direty is changed inside
+                        m_snake.AddToTail(possibleSnakeTailPoint);
+                    }
+
+                    break;
+
+                case SnakeCollision.Border:
+                    gameEnd = true;
+                    m_results.AddMessage("Collision with Border");
+                    m_results.AddMessage("Game end");
+                    m_results.IsDirty = true;
+                    break;
+
+                case SnakeCollision.Snake:
+
+                    break;
+
+                default:
+                    break;
+            }           
         }
 
-        List<IGameObject> listGameObjects;
+        List<IGameObject> m_listGameObjects;
         Apple m_apple;
         Snake m_snake;
         Border m_border;
         Results m_results;
+        UserInputComponent userInput;
+        Direction? m_directionSnakeHead;
+        readonly int resultMargin = 2;
     }
 }

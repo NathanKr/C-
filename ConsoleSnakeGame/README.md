@@ -1,5 +1,6 @@
-<h2>What the project does</h2>
-This project is a collection of small projects i did as a lecturer of a course "Object Orient Programming using C#" 
+snake game using game design patterns from https://gameprogrammingpatterns.com/
 
-<h2>Who maintains and contributes to the project</h2>
-Nathan Krasney : https://il.linkedin.com/in/nathankrasney
+todo :
+- who should change IsDirety ?? SnakeGame or GameObject ??
+- use collision from PhysicsComponent , but how can be done for snake
+- put position in GameObject

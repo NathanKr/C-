@@ -8,28 +8,42 @@ namespace ConsoleApp1
     // --- put here final , result , time , ....
     class Results : IGameObject
     {
-        private bool m_bIsDirty;
-
-        public bool IsDirty
+        public Results(Point pointTopLeft)
         {
-            get
-            {
-                return m_bIsDirty;
-            }
-            set
-            {
-                m_bIsDirty = value;
-            }
+            TopLeft = pointTopLeft;
+            m_listMessages = new List<string>();
         }
+
+
+        public bool IsDirty  { get; set; }
 
         public void Draw()
         {
-            //todo nath
+            int x= TopLeft.x, y = TopLeft.y;
+            foreach (string message in m_listMessages)
+            {
+                Console.SetCursorPosition(x, y);
+                Console.Write(message);
+                y++;
+            }
+        }
+
+        public void AddMessage(string strMessage)
+        {
+            m_listMessages.Add(strMessage);
+        }
+
+        public void Clear()
+        {
+            m_listMessages.Clear();
         }
 
         public void Update(GameTime gameTime)
         {
-            //todo nath
+            // do noting
         }
+
+        Point TopLeft;
+        List<string> m_listMessages;
     }
 }

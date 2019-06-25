@@ -6,10 +6,10 @@ namespace ConsoleApp1
 {
     public class Point
     {
-        public Point(int x, int y)
+        public Point(int x = 0, int y = 0)
         {
             this.x = x;
-            this.y = y;
+            this.y = y; 
         }
 
         public bool IsEqual(Point p)
