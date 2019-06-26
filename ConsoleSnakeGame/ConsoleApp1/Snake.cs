@@ -12,12 +12,15 @@ namespace ConsoleApp1
             ColorChar colorHead,
             ColorChar colorTail)
         {
-            m_body = new List<Point>();
-            Head = snakeHead;
+            m_listSnakeItems = new List<SnakeItem>();
             m_snakeHeadPrev = null;
-            m_body.Add(snakeHead);
+            m_listSnakeItems.Add(new SnakeItem { Point = snakeHead , WasNeverDraw = true});
+            Head = m_listSnakeItems[0].Point;
             m_colorHead = colorHead;
             m_colorTail = colorTail;
+            //m_bAddedTailWasHandled = false;
+            //m_bTailWasAdded = false;
+            //m_bHeadWasDrawFirstTime = false;
         }
 
 
@@ -26,38 +29,98 @@ namespace ConsoleApp1
 
         public void Draw()
         {
-            if (m_snakeHeadPrev == null)
+            // --- order IS IMPORTANT , start from head
+            //drawHead();
+            //drawBody();
+            SnakeItem snakeItem;
+            for (int i = 0; i < m_listSnakeItems.Count ; i++)
             {
-                m_colorHead.Write(Head);
-                m_snakeHeadPrev = new Point(Head.x, Head.y);
-            }
-            else
-            {
-                Console.MoveBufferArea(
-                    m_snakeHeadPrev.x, m_snakeHeadPrev.y,
-                    1, 1,
-                    Head.x, Head.y);
-
-                //todo i dont like that draw has logic !!!!!!!!
-                m_snakeHeadPrev.x = Head.x;
-                m_snakeHeadPrev.y = Head.y;
+                snakeItem = m_listSnakeItems[i];
+                if (snakeItem.WasNeverDraw)
+                {
+                    if (i == 0)
+                    {
+                        m_colorHead.Write(snakeItem.Point);
+                    }
+                    else
+                    {
+                        m_colorTail.Write(snakeItem.Point);
+                    }
+                    snakeItem.WasNeverDraw = false;
+                }
+                else
+                {
+                    if (i == 0)
+                    {
+                        Console.MoveBufferArea(
+                            m_snakeHeadPrev.x, m_snakeHeadPrev.y,
+                            1, 1,
+                            Head.x, Head.y);
+                    }
+                    else
+                    {
+                        Console.MoveBufferArea(
+                            m_listSnakeItems[i].Point.x, m_listSnakeItems[i].Point.y,
+                            1, 1,
+                            m_listSnakeItems[i - 1].Point.x, m_listSnakeItems[i - 1].Point.y);
+                    }
+                }
             }
         }
 
+        //private void drawBody()
+        //{
+        //    int count = m_listSnakeItems.Count;
+        //    if (m_bTailWasAdded && !m_bAddedTailWasHandled)
+        //    {
+        //        m_colorTail.Write(getLastOnBody());
+        //        m_bTailWasAdded = false;
+        //        m_bAddedTailWasHandled = true;
+        //        count--;//because it is handled here
+        //    }
+
+        //    for (int i = 1; i < count; i++)
+        //    {
+        //        Console.MoveBufferArea(
+        //            m_listSnakeItems[i].Point.x, m_listSnakeItems[i].Point.y,
+        //            1, 1,
+        //            m_listSnakeItems[i - 1].Point.x, m_listSnakeItems[i - 1].Point.y);
+        //    }
+        //}
+
+        //private void drawHead()
+        //{
+        //    if (!m_bHeadWasDrawFirstTime)
+        //    {
+        //        m_colorHead.Write(Head);
+        //        m_bHeadWasDrawFirstTime = true;
+        //    }
+        //    else
+        //    {
+        //        Console.MoveBufferArea(
+        //            m_snakeHeadPrev.x, m_snakeHeadPrev.y,
+        //            1, 1,
+        //            Head.x, Head.y);
+        //    }
+        //}
 
         public void Update(GameTime gameTime)
         {
-            //do nothing
+            if(m_snakeHeadPrev == null)
+            {
+                m_snakeHeadPrev = new Point(Head.x, Head.y);
+            }
         }
 
         Point getLastOnBody()
         {
-            return m_body[m_body.Count - 1];
+            return m_listSnakeItems[m_listSnakeItems.Count - 1].Point;
         }
 
         public void AddToTail(Point point)
         {
-            m_body.Add(point);
+            m_listSnakeItems.Add(new SnakeItem {Point = point , WasNeverDraw = true});
+            //m_bTailWasAdded = true;
             IsDirty = true;
         }
 
@@ -90,10 +153,6 @@ namespace ConsoleApp1
             return possibleNewPoint;
         }
 
-        private List<Point> m_body;
-        public Point Head { get; private set; }
-        private Point m_snakeHeadPrev;
-        private ColorChar m_colorHead, m_colorTail;
         public Direction Direction
         {
             get
@@ -102,23 +161,40 @@ namespace ConsoleApp1
             }
             set
             {
+                m_direction = value;
                 IsDirty = true;// --- changed on default
-                switch (value)
+                switch (m_direction)
                 {
                     case Direction.Down:
-                        Head.y++;
+                        updateHeadPrev();
+                        foreach (var item in m_listSnakeItems)
+                        {
+                            item.Point.y++;
+                        }
                         break;
 
                     case Direction.Up:
-                        Head.y--;
+                        updateHeadPrev();
+                        foreach (var item in m_listSnakeItems)
+                        {
+                            item.Point.y--;
+                        }
                         break;
 
                     case Direction.Left:
-                        Head.x--;
+                        updateHeadPrev();
+                        foreach (var item in m_listSnakeItems)
+                        {
+                            item.Point.x--;
+                        }
                         break;
 
                     case Direction.Right:
-                        Head.x++;
+                        updateHeadPrev();
+                        foreach (var item in m_listSnakeItems)
+                        {
+                            item.Point.x++;
+                        }
                         break;
 
                     default:
@@ -127,7 +203,21 @@ namespace ConsoleApp1
                 }
             }
         }
+
+        private void updateHeadPrev()
+        {
+            m_snakeHeadPrev.x = Head.x;
+            m_snakeHeadPrev.y = Head.y;
+        }
+
+        private List<SnakeItem> m_listSnakeItems;
+        public Point Head { get; private set; }
+        private Point m_snakeHeadPrev;
+        private ColorChar m_colorHead, m_colorTail;
         Direction m_direction;
+//        bool m_bTailWasAdded;
+  //      private bool m_bHeadWasDrawFirstTime;
+    //    bool m_bAddedTailWasHandled;
 
     }
 }

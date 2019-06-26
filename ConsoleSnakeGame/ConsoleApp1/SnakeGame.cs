@@ -12,20 +12,20 @@ namespace ConsoleApp1
             m_listGameObjects = new List<IGameObject>();
 
             m_border = new Border(
-                boardInfo.boardTopLeft, 
-                boardInfo.boardBottomRight, 
-                boardInfo.cBorder);
+                boardInfo.BoardTopLeft, 
+                boardInfo.BoardBottomRight, 
+                boardInfo.BorderSymbol);
 
             m_snake = new Snake(
-                snakeInfo.snakeHead,
-               snakeInfo.colorHead,
-               snakeInfo.colorTail);
+                snakeInfo.SnakeHead,
+               snakeInfo.ColorHead,
+               snakeInfo.ColorTail);
 
             m_apple = new Apple(appleInfo.Head , appleInfo.ColorHead);
 
             m_results = new Results(new Point(
-                boardInfo.boardTopLeft.x + resultMargin,
-                boardInfo.boardBottomRight.y + resultMargin));
+                boardInfo.BoardTopLeft.x + resultMargin,
+                boardInfo.BoardBottomRight.y + resultMargin));
 
             m_listGameObjects.Add(m_border);
             m_listGameObjects.Add(m_apple);
@@ -116,9 +116,9 @@ namespace ConsoleApp1
                     m_apple.Head = Utils.GetRandPoint(topLeftInsideBorder, bottomRightInsideBorder);
                     m_apple.IsDirty = true;//todo do inside ???
                     Point possibleSnakeTailPoint = m_snake.Grow();
-                    if (isCollision(possibleSnakeTailPoint))
+                    if (!isCollision(possibleSnakeTailPoint))
                     {
-                        // --- direty is changed inside
+                        // --- dirty is changed inside
                         m_snake.AddToTail(possibleSnakeTailPoint);
                     }
 

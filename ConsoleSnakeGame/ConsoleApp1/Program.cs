@@ -8,16 +8,19 @@ namespace ConsoleApp1
         {
             Console.CursorVisible = false;
 
-            AppleInfo appleInfo = new AppleInfo (
-                new ColorChar('@', ConsoleColor.Red, ConsoleColor.DarkYellow),
-                new Point(80,10));
+            AppleInfo appleInfo = new AppleInfo {
+                ColorHead = new ColorChar('@', ConsoleColor.Red, ConsoleColor.DarkYellow),
+                Head = new Point(80,10)};
 
-            BoardInfo boardInfo = new BoardInfo(new Point(0, 0), new Point(100, 20), '.');
+            BoardInfo boardInfo = new BoardInfo {
+                BoardTopLeft = new Point(0, 0),
+                BoardBottomRight = new Point(100, 20),
+                BorderSymbol = '.' };
 
-            SnakeInfo snakeInfo = new SnakeInfo(
-                new Point(50, 10),
-                new ColorChar('O', ConsoleColor.Blue, ConsoleColor.Cyan),
-                new ColorChar('x', ConsoleColor.DarkGreen, ConsoleColor.Red));
+            SnakeInfo snakeInfo = new SnakeInfo {
+                SnakeHead = new Point(50, 10),
+                ColorHead = new ColorChar('O', ConsoleColor.Blue, ConsoleColor.Cyan),
+                ColorTail = new ColorChar('x', ConsoleColor.DarkGreen, ConsoleColor.Red)};
 
             SnakeGame game = new SnakeGame(boardInfo, snakeInfo,  appleInfo);
 
