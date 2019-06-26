@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestSnake", "UnitTestSn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{806D2810-471D-4336-9CA4-BF427028594E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameGeneric", "GameGeneric\GameGeneric.csproj", "{593AFA07-3D30-4EA9-AE55-11C7B1084068}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{806D2810-471D-4336-9CA4-BF427028594E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{806D2810-471D-4336-9CA4-BF427028594E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{806D2810-471D-4336-9CA4-BF427028594E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{593AFA07-3D30-4EA9-AE55-11C7B1084068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{593AFA07-3D30-4EA9-AE55-11C7B1084068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{593AFA07-3D30-4EA9-AE55-11C7B1084068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{593AFA07-3D30-4EA9-AE55-11C7B1084068}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

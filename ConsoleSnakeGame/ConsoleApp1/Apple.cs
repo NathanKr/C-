@@ -1,7 +1,7 @@
-﻿using ConsoleApp1.GameGeneric;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GameGeneric;
 
 namespace ConsoleApp1
 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using GameGeneric;
 
 namespace ConsoleApp1
 {

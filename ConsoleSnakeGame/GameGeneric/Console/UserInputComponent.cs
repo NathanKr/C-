@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleApp1
+namespace GameGeneric
 {
     // --- put here user input e.g. keyboard
-    class UserInputComponent
+    public class UserInputComponent
     {
         /// <summary>
         /// non blocking

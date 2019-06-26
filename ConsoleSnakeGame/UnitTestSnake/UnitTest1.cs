@@ -1,5 +1,6 @@
+using GameGeneric;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ConsoleApp1;
+
 
 namespace UnitTestSnake
 {

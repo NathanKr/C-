@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleApp1
+namespace GameGeneric
 {
-    enum Direction
+    public enum Direction
     {
         Left, Right, Up, Down
     }

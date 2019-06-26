@@ -1,12 +1,11 @@
-﻿using ConsoleApp1.GameGeneric;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace ConsoleApp1
+namespace GameGeneric
 {
-    abstract class GameLoop
+    public abstract class GameLoop
     {
         protected bool gameEnd = false;
         public const int TARGET_FPS = 60;

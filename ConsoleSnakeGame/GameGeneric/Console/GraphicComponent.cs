@@ -1,11 +1,10 @@
-﻿using ConsoleApp1.GameGeneric;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleApp1
+namespace GameGeneric
 {
-    class GraphicComponent
+    public class GraphicComponent
     {
         public void WriteCol(Point start, int length, char cBorder)
         {

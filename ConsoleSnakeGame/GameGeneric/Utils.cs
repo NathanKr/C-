@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleApp1.GameGeneric
+namespace GameGeneric
 {
-    class Utils
+    public class Utils
     {
         public static Point GetRandPoint(Point rectTopLeft, Point reactBottomRight)
         {

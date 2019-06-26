@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleApp1
+namespace GameGeneric
 {
-    class ColorChar
+    public class ColorChar
     {
         public ColorChar(char text, ConsoleColor color, ConsoleColor backgroundColor)
         {

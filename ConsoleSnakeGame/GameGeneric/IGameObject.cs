@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleApp1.GameGeneric
+namespace GameGeneric
 {
-    interface IGameObject
+    public interface IGameObject
     {
         /// <summary>
         /// Logic
