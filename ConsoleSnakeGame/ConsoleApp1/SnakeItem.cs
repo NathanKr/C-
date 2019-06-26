@@ -8,7 +8,8 @@ namespace ConsoleApp1
     // must be class because i need it as reference type
     class SnakeItem
     {
-        public Point Point;
+        public Point Current;
+        public Point Prev;
         public bool WasNeverDraw;
     }
 }

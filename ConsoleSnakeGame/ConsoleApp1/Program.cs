@@ -10,7 +10,10 @@ namespace ConsoleApp1
             Console.CursorVisible = false;
 
             AppleInfo appleInfo = new AppleInfo {
-                ColorHead = new ColorChar('@', ConsoleColor.Red, ConsoleColor.DarkYellow),
+                ColorHead = new ColorChar(
+                    '@', 
+                    ConsoleColor.Red,
+                    ConsoleColor.DarkYellow),
                 Head = new Point(80,10)};
 
             BoardInfo boardInfo = new BoardInfo {
@@ -20,8 +23,16 @@ namespace ConsoleApp1
 
             SnakeInfo snakeInfo = new SnakeInfo {
                 SnakeHead = new Point(50, 10),
-                ColorHead = new ColorChar('O', ConsoleColor.Blue, ConsoleColor.Cyan),
-                ColorTail = new ColorChar('x', ConsoleColor.DarkGreen, ConsoleColor.Red)};
+                ColorHead = new ColorChar(
+                    'O',
+                    ConsoleColor.Blue, 
+                    ConsoleColor.Cyan),
+                ColorTail = new ColorChar(
+                    'x',
+                    ConsoleColor.DarkGreen,
+                    ConsoleColor.Red),
+                UpdatePeriodSec = 0.1f
+            };
 
             SnakeGame game = new SnakeGame(boardInfo, snakeInfo,  appleInfo);
 

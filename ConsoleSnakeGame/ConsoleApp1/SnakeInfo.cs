@@ -12,5 +12,6 @@ namespace ConsoleApp1
         public Point SnakeHead;
         public ColorChar ColorHead;
         public ColorChar ColorTail;
+        public float UpdatePeriodSec;
     }
 }

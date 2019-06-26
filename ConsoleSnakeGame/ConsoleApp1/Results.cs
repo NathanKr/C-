@@ -31,16 +31,18 @@ namespace ConsoleApp1
         public void AddMessage(string strMessage)
         {
             m_listMessages.Add(strMessage);
+            IsDirty = true;
         }
 
         public void Clear()
         {
             m_listMessages.Clear();
+            IsDirty = true;
         }
 
         public void Update(GameTime gameTime)
         {
-            // do noting
+            //nothing to do
         }
 
         Point TopLeft;

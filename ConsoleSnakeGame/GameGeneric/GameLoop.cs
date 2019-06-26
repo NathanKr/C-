@@ -25,7 +25,6 @@ namespace GameGeneric
                 gameTime.TotalTimeSec += gameTime.ElaspedSienceLastUpdateSec;
                 if (gameTime.ElaspedSienceLastUpdateSec > TIME_UNTIL_UPDATE_SEC)
                 {
-                    //Console.WriteLine(gameTime.ElaspedSienceLastUpdateSec);
                     stopWatch.Restart();
                     Update(gameTime);
                     Draw();

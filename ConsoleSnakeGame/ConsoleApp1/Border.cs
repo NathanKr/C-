@@ -24,11 +24,11 @@ namespace ConsoleApp1
         public bool IsDirty { set; get; }
 
 
-        public Border(Point boardTopLeft, Point boardBottomRight, char cBorder)
+        public Border(BoardInfo info)
         {
-            this.TopLeft = boardTopLeft;
-            this.BottomRight = boardBottomRight;
-            this.cBorder = cBorder;
+            this.TopLeft = info.BoardTopLeft;
+            this.BottomRight = info.BoardBottomRight;
+            this.cBorder = info.BorderSymbol;
             m_graphics = new GraphicComponent();
         }
 
@@ -51,7 +51,7 @@ namespace ConsoleApp1
 
         public void Update(GameTime gameTime)
         {
-            //todo implement
+            //nothing to do
         }
 
         private GraphicComponent m_graphics;

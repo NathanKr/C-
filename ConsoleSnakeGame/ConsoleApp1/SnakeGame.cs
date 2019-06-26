@@ -11,17 +11,11 @@ namespace ConsoleApp1
         {
             m_listGameObjects = new List<IGameObject>();
 
-            m_border = new Border(
-                boardInfo.BoardTopLeft, 
-                boardInfo.BoardBottomRight, 
-                boardInfo.BorderSymbol);
+            m_border = new Border(boardInfo);
 
-            m_snake = new Snake(
-                snakeInfo.SnakeHead,
-               snakeInfo.ColorHead,
-               snakeInfo.ColorTail);
+            m_snake = new Snake(snakeInfo);
 
-            m_apple = new Apple(appleInfo.Head , appleInfo.ColorHead);
+            m_apple = new Apple(appleInfo);
 
             m_results = new Results(new Point(
                 boardInfo.BoardTopLeft.x + resultMargin,
@@ -54,7 +48,7 @@ namespace ConsoleApp1
             if (m_directionSnakeHead.HasValue)
             {
                 // --- direty is handled inside
-                m_snake.Direction = m_directionSnakeHead.Value;
+                m_snake.HeadDirection = m_directionSnakeHead.Value;
             }
         }
 
@@ -114,12 +108,14 @@ namespace ConsoleApp1
                     Point bottomRightInsideBorder =
                         new Point(m_border.BottomRight.x - 1, m_border.BottomRight.y - 1);
                     m_apple.Head = Utils.GetRandPoint(topLeftInsideBorder, bottomRightInsideBorder);
-                    m_apple.IsDirty = true;//todo do inside ???
+                    m_apple.IsDirty = true;
                     Point possibleSnakeTailPoint = m_snake.Grow();
                     if (!isCollision(possibleSnakeTailPoint))
                     {
-                        // --- dirty is changed inside
                         m_snake.AddToTail(possibleSnakeTailPoint);
+                        m_nApplesEaten++;
+                        m_results.Clear();
+                        m_results.AddMessage($"apples : {m_nApplesEaten}");
                     }
 
                     break;
@@ -148,5 +144,6 @@ namespace ConsoleApp1
         UserInputComponent userInput;
         Direction? m_directionSnakeHead;
         readonly int resultMargin = 2;
+        int m_nApplesEaten;
     }
 }

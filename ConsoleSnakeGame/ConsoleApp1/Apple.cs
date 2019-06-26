@@ -7,10 +7,10 @@ namespace ConsoleApp1
 {
     class Apple : IGameObject 
     {
-        public Apple(Point head, ColorChar colorHead)
+        public Apple(AppleInfo info)
         {
-            this.colorHead = colorHead;
-            Head = head;
+            this.colorHead = info.ColorHead;
+            Head = info.Head;
         }
 
         public bool IsCollision(Point point)
@@ -29,7 +29,7 @@ namespace ConsoleApp1
 
         public void Update(GameTime gameTime)
         {
-            //todo implement
+            // nothing to do
         }
 
         public Point Head { get; set; }
