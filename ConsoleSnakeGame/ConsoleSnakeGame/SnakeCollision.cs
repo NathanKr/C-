@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleSnakeGame
 {
-    enum SnakeCollision
+    public enum SnakeCollision
     {
-        Border,
-        Apple
+        Border, // snake head collide with border
+        Apple, // snake head collide with body
+        Snake // snake head collide with body
     }
 }

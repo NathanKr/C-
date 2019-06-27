@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameGeneric;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,17 +7,10 @@ using System.Threading.Tasks;
 
 namespace ConsoleSnakeGame
 {
-    class BoardInfo
+    public struct BoardInfo
     {
-        public BoardInfo(Point boardTopLeft, Point boardBottomRight , char cBorder)
-        {
-            this.boardBottomRight = boardBottomRight;
-            this.boardTopLeft = boardTopLeft;
-            this.cBorder = cBorder;
-        }
-
-        public Point boardTopLeft { get; set; }
-        public char cBorder { get; set; }
-        public Point boardBottomRight { get; set; }
+        public Point BoardTopLeft;
+        public char BorderSymbol;
+        public Point BoardBottomRight;
     }
 }

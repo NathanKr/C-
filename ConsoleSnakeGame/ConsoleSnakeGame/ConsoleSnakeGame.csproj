@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6FC1DBFE-B776-4F72-88B1-0F3DFC372B1E}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GameGeneric</RootNamespace>
-    <AssemblyName>GameGeneric</AssemblyName>
+    <ProjectGuid>{AC655FFC-4B76-405B-9CF0-0E87A680637E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ConsoleSnakeGame</RootNamespace>
+    <AssemblyName>ConsoleSnakeGame</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,17 +43,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Console\ColorChar.cs" />
-    <Compile Include="Console\GraphicComponent.cs" />
-    <Compile Include="Console\UserInputComponent.cs" />
-    <Compile Include="Direction.cs" />
-    <Compile Include="GameLoop.cs" />
-    <Compile Include="GameTime.cs" />
-    <Compile Include="IGameObject.cs" />
-    <Compile Include="Point.cs" />
+    <Compile Include="Apple.cs" />
+    <Compile Include="AppleInfo.cs" />
+    <Compile Include="BoardInfo.cs" />
+    <Compile Include="Border.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SoundComponent.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="TextOutput.cs" />
+    <Compile Include="Snake.cs" />
+    <Compile Include="SnakeCollision.cs" />
+    <Compile Include="SnakeGame.cs" />
+    <Compile Include="SnakeInfo.cs" />
+    <Compile Include="SnakeItem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sound\snack-crunch2.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameGeneric\GameGeneric.csproj">
+      <Project>{6fc1dbfe-b776-4f72-88b1-0f3dfc372b1e}</Project>
+      <Name>GameGeneric</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

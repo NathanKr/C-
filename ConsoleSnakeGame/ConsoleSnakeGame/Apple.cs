@@ -1,34 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using GameGeneric;
 
 namespace ConsoleSnakeGame
 {
-    class Apple
+    public class Apple : IGameObject 
     {
-        public Apple(Point head, ColorChar colorHead)
+        public Apple(AppleInfo info)
         {
-            this.colorHead = colorHead;
-            this.Head = head;
-            prevHead = head;
-            colorHead.Write(head);
+            this.colorHead = info.ColorHead;
+            Head = info.Head;
         }
 
-        public void Write()
+        public bool IsCollision(Point point)
+        {
+            return Head.IsEqual(point);
+        }
+
+        public bool IsDirty { set; get; }
+
+
+        public void Draw()
         {
             colorHead.Write(Head);
         }
 
-        public void Move(Point newPoint)
+
+        public void Update(GameTime gameTime)
         {
-            prevHead = Head;
-            Head = newPoint;
+            // nothing to do
         }
 
-        public Point Head { get; private set; }
-        private Point prevHead;
+        public Point Head { get; set; }
         private ColorChar colorHead;
     }
 }
