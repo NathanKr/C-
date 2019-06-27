@@ -33,6 +33,8 @@ namespace ConsoleSnakeGame
             m_soundComponent = new SoundComponent();
             m_soundComponent.SoundPlayer.SoundLocation =
                 Path.Combine(Constants.SOUND_DIR, Constants.SOUND_FILE);
+
+            m_storageBestResult = new BestResultStorage(Constants.BEST_RESULTS_FILE); ;
         }
 
         public override void Draw()
@@ -69,6 +71,11 @@ namespace ConsoleSnakeGame
             m_border.IsDirty = m_apple.IsDirty = m_snake.IsDirty = true;
             m_textOutput.AddMessage(@"Hit Left\Right\Up\Down arrows to move snake");
             m_textOutput.IsDirty = true;
+            List<string> list = m_storageBestResult.Read();
+            if(list.Count == 1)
+            {
+                m_nBestApplesScore = int.Parse(list[0]);
+            }
         }
 
         bool isCollision(Point point)
@@ -132,8 +139,13 @@ namespace ConsoleSnakeGame
                     {
                         m_snake.AddToTail(possibleSnakeTailPoint);
                         m_nApplesEaten++;
+                        if(m_nApplesEaten > m_nBestApplesScore)
+                        {
+                            m_storageBestResult.Write(m_nApplesEaten);
+                            m_nBestApplesScore = m_nApplesEaten;
+                        }
                         m_textOutput.Clear();
-                        m_textOutput.AddMessage($"Apples : {m_nApplesEaten}");
+                        m_textOutput.AddMessage($"Best apples result : {m_nBestApplesScore} , Current apples : {m_nApplesEaten}");
                     }
 
                     break;
@@ -163,5 +175,7 @@ namespace ConsoleSnakeGame
         Direction? m_directionSnakeHead;
         readonly int resultMargin = 2;
         int m_nApplesEaten;
+        int m_nBestApplesScore;
+        BestResultStorage m_storageBestResult;
     }
 }

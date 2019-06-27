@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Apple.cs" />
     <Compile Include="AppleInfo.cs" />
+    <Compile Include="BestResultStorage.cs" />
     <Compile Include="BoardInfo.cs" />
     <Compile Include="Border.cs" />
     <Compile Include="Constants.cs" />
