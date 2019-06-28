@@ -11,12 +11,21 @@ namespace ConsoleSnakeGame
         {
             m_listSnakeItems = new List<SnakeItem>();
             m_listSnakeItems.Add(new SnakeItem {
-                Current = info.SnakeHead,
+                    Current = info.SnakeHead,
                     WasNeverDraw = true});
+            for (int i = 0; i < Constants.INITIAL_SNAKE_BODY_COUNT; i++)
+            {
+                m_listSnakeItems.Add(new SnakeItem
+                {
+                    // add to the left
+                    Current = getPossiblePointOnDirection(Direction.Right) ,
+                    WasNeverDraw = true
+                });
+            }
             Head = m_listSnakeItems[0].Current;
             m_colorHead = info.ColorHead;
             m_colorTail = info.ColorTail;
-            m_UpdatePeriodSec = info.UpdatePeriodSec;
+            CurrentUpdatePeriodSec = m_OriginalUpdatePeriodSec = info.UpdatePeriodSec;
         }
 
 
@@ -79,16 +88,16 @@ namespace ConsoleSnakeGame
 
         bool timeToUpdate()
         {
-            return m_computedUpdatePeriodSec > m_UpdatePeriodSec; 
+            return m_accumulatedUpdatePeriodSec > CurrentUpdatePeriodSec; 
         }
         
         public void Update(GameTime gameTime)
         {
-            m_computedUpdatePeriodSec += gameTime.ElaspedSienceLastUpdateSec;
+            m_accumulatedUpdatePeriodSec += gameTime.ElaspedSienceLastUpdateSec;
 
             if (HeadDirection.HasValue && timeToUpdate())
             {
-                m_computedUpdatePeriodSec = 0;
+                m_accumulatedUpdatePeriodSec = 0;
                 IsDirty = true;// snake is dirty on every time to update
 
                 updatePositions();
@@ -225,8 +234,9 @@ namespace ConsoleSnakeGame
         private List<SnakeItem> m_listSnakeItems;
         public Point Head { get; private set; }
         private ColorChar m_colorHead, m_colorTail;
-        readonly private float m_UpdatePeriodSec;
-        float m_computedUpdatePeriodSec;
+        readonly private float m_OriginalUpdatePeriodSec;
+        public float CurrentUpdatePeriodSec { get; set; }
+        float m_accumulatedUpdatePeriodSec;
         Direction ? m_headDirection;
     }
 }

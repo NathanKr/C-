@@ -26,9 +26,9 @@ namespace ConsoleSnakeGame
 
         public Border(BoardInfo info)
         {
-            this.TopLeft = info.BoardTopLeft;
-            this.BottomRight = info.BoardBottomRight;
-            this.cBorder = info.BorderSymbol;
+            TopLeft = info.BoardTopLeft;
+            BottomRight = info.BoardBottomRight;
+            ColorBorder = info.ColorBorder;
             m_graphics = new GraphicComponent();
         }
 
@@ -37,14 +37,14 @@ namespace ConsoleSnakeGame
             // --- write rows
             Point boardBottomLeft = new Point(TopLeft.x, BottomRight.y);
             int width = BottomRight.x - TopLeft.x + 1;
-            m_graphics.WriteRow(TopLeft, width, cBorder);
-            m_graphics.WriteRow(boardBottomLeft, width, cBorder);
+            m_graphics.WriteRow(TopLeft, width, ColorBorder);
+            m_graphics.WriteRow(boardBottomLeft, width, ColorBorder);
 
             // --- write cols
             Point boardTopRight = new Point(BottomRight.x, TopLeft.y);
             int height = BottomRight.y - TopLeft.y + 1;
-            m_graphics.WriteCol(TopLeft, height, cBorder);
-            m_graphics.WriteCol(boardTopRight, height, cBorder);
+            m_graphics.WriteCol(TopLeft, height, ColorBorder);
+            m_graphics.WriteCol(boardTopRight, height, ColorBorder);
 
         }
 
@@ -57,7 +57,7 @@ namespace ConsoleSnakeGame
         private GraphicComponent m_graphics;
         public Point TopLeft { get; }
         public Point BottomRight { get; }
-        char cBorder;
+        ColorChar ColorBorder;
 
     }
 }

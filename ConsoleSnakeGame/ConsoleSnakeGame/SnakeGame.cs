@@ -138,14 +138,16 @@ namespace ConsoleSnakeGame
                     if (!isCollision(possibleSnakeTailPoint))
                     {
                         m_snake.AddToTail(possibleSnakeTailPoint);
-                        m_nApplesEaten++;
-                        if(m_nApplesEaten > m_nBestApplesScore)
+                        m_nCurrentApplesScore += 10;
+                        m_snake.CurrentUpdatePeriodSec = 
+                            m_snake.CurrentUpdatePeriodSec * (1-Constants.GROW_PERCENT/100f);
+                        if (m_nCurrentApplesScore > m_nBestApplesScore)
                         {
-                            m_storageBestResult.Write(m_nApplesEaten);
-                            m_nBestApplesScore = m_nApplesEaten;
+                            m_storageBestResult.Write(m_nCurrentApplesScore);
+                            m_nBestApplesScore = m_nCurrentApplesScore;
                         }
                         m_textOutput.Clear();
-                        m_textOutput.AddMessage($"Best apples result : {m_nBestApplesScore} , Current apples : {m_nApplesEaten}");
+                        m_textOutput.AddMessage($"Best score : {m_nBestApplesScore} , Current score : {m_nCurrentApplesScore}");
                     }
 
                     break;
@@ -174,7 +176,7 @@ namespace ConsoleSnakeGame
         SoundComponent m_soundComponent;
         Direction? m_directionSnakeHead;
         readonly int resultMargin = 2;
-        int m_nApplesEaten;
+        int m_nCurrentApplesScore;
         int m_nBestApplesScore;
         BestResultStorage m_storageBestResult;
     }

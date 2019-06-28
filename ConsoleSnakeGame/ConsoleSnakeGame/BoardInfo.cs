@@ -10,7 +10,7 @@ namespace ConsoleSnakeGame
     public struct BoardInfo
     {
         public Point BoardTopLeft;
-        public char BorderSymbol;
+        public ColorChar ColorBorder;
         public Point BoardBottomRight;
     }
 }

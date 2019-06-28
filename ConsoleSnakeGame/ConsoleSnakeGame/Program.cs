@@ -13,25 +13,28 @@ namespace ConsoleSnakeGame
             AppleInfo appleInfo = new AppleInfo {
                 ColorHead = new ColorChar(
                     '@', 
-                    ConsoleColor.Red,
-                    ConsoleColor.DarkYellow),
+                    ConsoleColor.Cyan,
+                    ConsoleColor.Black),
                 Head = new Point(60,10)};
 
             BoardInfo boardInfo = new BoardInfo {
                 BoardTopLeft = new Point(0, 0),
                 BoardBottomRight = new Point(80, 20),
-                BorderSymbol = '.' };
+                ColorBorder = new ColorChar(
+                    '.' , 
+                    ConsoleColor.Yellow,
+                    ConsoleColor.Black) };
 
             SnakeInfo snakeInfo = new SnakeInfo {
                 SnakeHead = new Point(50, 10),
                 ColorHead = new ColorChar(
                     'O',
-                    ConsoleColor.Blue, 
-                    ConsoleColor.Cyan),
+                    ConsoleColor.Red, 
+                    ConsoleColor.Black),
                 ColorTail = new ColorChar(
-                    'x',
-                    ConsoleColor.DarkGreen,
-                    ConsoleColor.Red),
+                    'o',
+                    ConsoleColor.Green,
+                    ConsoleColor.Black),
                 UpdatePeriodSec = 0.1f
             };
 
