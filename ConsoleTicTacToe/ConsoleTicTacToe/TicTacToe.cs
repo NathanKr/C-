@@ -24,26 +24,25 @@ namespace ConsoleTicTacToe
 
         public void Start()
         {
-            m_bPlayAgain = true;
             m_startedPlayer = m_player1;
 
             showScores();
             readPlayers();
 
-            while (m_bPlayAgain)
+            do
             {
                 resetGame();
-
-                while (!m_bGameIsOver)
+                do
                 {
                     m_board.Write();
                     getInputFromPlayer();
                     checkGameIsOver();
                     switchCurrentPlayer();
-                }
-                Console.WriteLine("Do you want to start a new game ? y\\n");
+                } while (!m_bGameIsOver) ;
+                    Console.WriteLine("Do you want to start a new game ? y\\n");
                 m_bPlayAgain = char.Parse(Console.ReadLine()) == 'y';
-            }
+            } while (m_bPlayAgain);
+
             m_result.Write("Game is over");
         }
 
