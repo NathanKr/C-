@@ -8,6 +8,7 @@ namespace GameGeneric
     {
         public void WriteCol(Point start, int length, ColorChar colorBorder)
         {
+            
             Console.BackgroundColor = colorBorder.backgroundColor;
             Console.ForegroundColor = colorBorder.color;
             for (int i = 0; i < length; i++)

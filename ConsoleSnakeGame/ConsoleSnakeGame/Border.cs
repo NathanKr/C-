@@ -35,13 +35,13 @@ namespace ConsoleSnakeGame
         public void Draw()
         {
             // --- write rows
-            Point boardBottomLeft = new Point(TopLeft.x, BottomRight.y);
+            Point boardBottomLeft = new Point { x = TopLeft.x, y = BottomRight.y };
             int width = BottomRight.x - TopLeft.x + 1;
             m_graphics.WriteRow(TopLeft, width, ColorBorder);
             m_graphics.WriteRow(boardBottomLeft, width, ColorBorder);
 
             // --- write cols
-            Point boardTopRight = new Point(BottomRight.x, TopLeft.y);
+            Point boardTopRight = new Point { x = BottomRight.x, y = TopLeft.y };
             int height = BottomRight.y - TopLeft.y + 1;
             m_graphics.WriteCol(TopLeft, height, ColorBorder);
             m_graphics.WriteCol(boardTopRight, height, ColorBorder);

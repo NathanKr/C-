@@ -9,37 +9,20 @@ namespace ConsoleSnakeGame
 {
     public class SnakeGame : GameLoop
     {
-        public SnakeGame(BoardInfo boardInfo, SnakeInfo snakeInfo, AppleInfo appleInfo)
+        public SnakeGame(
+            BoardInfo boardInfo, SnakeInfo snakeInfo, 
+            AppleInfo appleInfo , TextOutputInfo textOutputInfo)
         {
             m_listGameObjects = new List<IGameObject>();
-
-            m_border = new Border(boardInfo);
-
-            m_snake = new Snake(snakeInfo);
-
-            m_apple = new Apple(appleInfo);
-
-            m_textOutput = new TextOutput(new Point(
-                boardInfo.BoardTopLeft.x + resultMargin,
-                boardInfo.BoardBottomRight.y + resultMargin));
-
-            m_listGameObjects.Add(m_border);
-            m_listGameObjects.Add(m_apple);
-            m_listGameObjects.Add(m_snake);
-            // --- result must be at the end so it can handle gameEnd
-            m_listGameObjects.Add(m_textOutput);
-
             userInput = new UserInputComponent();
-
             m_soundComponent = new SoundComponent();
-            m_soundEat = m_soundComponent.CreateSoundPlayer();
-            m_soundEat.SoundLocation =
-                Path.Combine(Constants.SOUND_DIR, Constants.SOUND_EAT_FILE);
-            m_soundDeath = m_soundComponent.CreateSoundPlayer();
-            m_soundDeath.SoundLocation =
-                Path.Combine(Constants.SOUND_DIR, Constants.SOUND_DEATH_FILE);
+            m_storageBestResult = new BestResultStorage(Constants.BEST_RESULTS_FILE);
 
-            m_storageBestResult = new BestResultStorage(Constants.BEST_RESULTS_FILE); ;
+
+            m_snakeInfo = snakeInfo;//readonly
+            m_appleInfo = appleInfo;//readonly
+            m_textOutputInfo = textOutputInfo;//readonly
+            m_boardInfo = boardInfo;
         }
 
         public override void Draw()
@@ -73,15 +56,43 @@ namespace ConsoleSnakeGame
 
         public override void Initialize()
         {
-            m_border.IsDirty = m_apple.IsDirty = m_snake.IsDirty = true;
+            initOnce();
+            initBeforeEveryGame();
+        }
+
+        private void initBeforeEveryGame()
+        {
+            Console.Clear();
+            m_border = new Border(m_boardInfo);
+            m_snake = new Snake(m_snakeInfo);
+            m_apple = new Apple(m_appleInfo);
+            m_textOutput = new TextOutput(m_textOutputInfo);
+            m_listGameObjects.Clear();
+            m_listGameObjects.Add(m_border);
+            m_listGameObjects.Add(m_apple);
+            m_listGameObjects.Add(m_snake);
+            // --- result must be at the end so it can handle gameEnd
+            m_listGameObjects.Add(m_textOutput);
+            m_border.IsDirty = m_apple.IsDirty = m_snake.IsDirty = m_textOutput.IsDirty = true;
             m_textOutput.AddMessage(@"Hit Left\Right\Up\Down arrows to move snake");
-            m_textOutput.IsDirty = true;
+        }
+
+        private void initOnce()
+        {
+            m_soundEat = m_soundComponent.CreateSoundPlayer();
+            m_soundEat.SoundLocation =
+                Path.Combine(Constants.SOUND_DIR, Constants.SOUND_EAT_FILE);
+            m_soundDeath = m_soundComponent.CreateSoundPlayer();
+            m_soundDeath.SoundLocation =
+                Path.Combine(Constants.SOUND_DIR, Constants.SOUND_DEATH_FILE);
             List<string> list = m_storageBestResult.Read();
-            if(list.Count == 1)
+            if (list.Count == 1)
             {
                 m_nBestApplesScore = int.Parse(list[0]);
             }
         }
+
+        
 
         bool isCollision(Point point)
         {
@@ -92,11 +103,11 @@ namespace ConsoleSnakeGame
         {
             SnakeCollision ? collision = null;
             
-            if (m_apple.IsCollision(m_snake.Head))
+            if (m_apple.IsCollision(m_snake.GetHead()))
             {
                 collision = SnakeCollision.Apple;
             }
-            else if (m_border.IsCollision(m_snake.Head))
+            else if (m_border.IsCollision(m_snake.GetHead()))
             {
                 collision = SnakeCollision.Border;
             }
@@ -110,6 +121,12 @@ namespace ConsoleSnakeGame
 
         public override void Update(GameTime gameTime)
         {
+            if(m_bPlayAgain.HasValue && m_bPlayAgain.Value)
+            {
+                initBeforeEveryGame();
+                m_bPlayAgain = null;
+            }
+
             SnakeCollision ? collision = checkCollisionWithSnakeHead();
 
             if (collision.HasValue)
@@ -134,9 +151,9 @@ namespace ConsoleSnakeGame
 
                     // --- todo notice that new position can be same as snake , fix this !!!!!!
                     Point topLeftInsideBorder =
-                        new Point(m_border.TopLeft.x + 1, m_border.TopLeft.y + 1);
+                        new Point { x = m_border.TopLeft.x + 1, y = m_border.TopLeft.y + 1 };
                     Point bottomRightInsideBorder =
-                        new Point(m_border.BottomRight.x - 1, m_border.BottomRight.y - 1);
+                        new Point {x= m_border.BottomRight.x - 1, y = m_border.BottomRight.y - 1 };
                     m_apple.Head = Utils.GetRandPoint(topLeftInsideBorder, bottomRightInsideBorder);
                     m_apple.IsDirty = true;
                     Point possibleSnakeTailPoint = m_snake.Grow();
@@ -159,11 +176,18 @@ namespace ConsoleSnakeGame
 
                 case SnakeCollision.Border:
                 case SnakeCollision.Snake:
-                    gameEnd = true;
+                    //gameEnd = true;
                     m_soundDeath.Play();
-                    m_textOutput.AddMessage($"Collision with {collision}");
-                    m_textOutput.AddMessage("Game end");
-                    m_textOutput.IsDirty = true;
+                    if(playAgain())
+                    {
+                        initBeforeEveryGame();
+                        m_bPlayAgain = null;
+                    }
+
+
+                    //m_textOutput.AddMessage($"Collision with {collision}");
+                    //m_textOutput.AddMessage("Game end");
+                    //m_textOutput.IsDirty = true;
                     break;
 
 
@@ -173,19 +197,33 @@ namespace ConsoleSnakeGame
             }           
         }
 
+        int m_nCountPlayAgainTmp;
+        private bool playAgain()
+        {
+            m_nCountPlayAgainTmp++;
+            return (m_nCountPlayAgainTmp == 1);
+        }
+
         List<IGameObject> m_listGameObjects;
         Apple m_apple;
         Snake m_snake;
         Border m_border;
+        private readonly SnakeInfo m_snakeInfo;
+
+        public AppleInfo m_appleInfo { get; }
+
+        private readonly TextOutputInfo m_textOutputInfo;
+        private readonly BoardInfo m_boardInfo;
         TextOutput m_textOutput;
         UserInputComponent userInput;
         SoundComponent m_soundComponent;
         Direction? m_directionSnakeHead;
-        readonly int resultMargin = 2;
+        //readonly int resultMargin = 2;
         int m_nCurrentApplesScore;
         int m_nBestApplesScore;
         private SoundPlayer m_soundDeath;
         BestResultStorage m_storageBestResult;
         SoundPlayer m_soundEat;
+        bool ? m_bPlayAgain;
     }
 }

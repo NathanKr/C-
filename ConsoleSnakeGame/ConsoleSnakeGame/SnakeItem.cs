@@ -9,7 +9,7 @@ namespace ConsoleSnakeGame
     public class SnakeItem
     {
         public Point Current;
-        public Point Prev; // todo is it possible to do without it and compute on the fly ?
+        public Point ? Prev; // todo is it possible to do without it and compute on the fly ?
         public bool WasNeverDraw;
     }
 }

@@ -15,7 +15,7 @@ namespace ConsoleSnakeGame
 
         public bool IsCollision(Point point)
         {
-            return Head.IsEqual(point);
+             return Head.IsEqual(point);
         }
 
         public bool IsDirty { set; get; }

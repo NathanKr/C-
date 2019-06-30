@@ -22,12 +22,16 @@ namespace ConsoleSnakeGame
                     WasNeverDraw = true
                 });
             }
-            Head = m_listSnakeItems[0].Current;
+            //Head = m_listSnakeItems[0].Current;
             m_colorHead = info.ColorHead;
             m_colorTail = info.ColorTail;
             CurrentUpdatePeriodSec = m_OriginalUpdatePeriodSec = info.UpdatePeriodSec;
         }
 
+        public Point GetHead()
+        {
+            return m_listSnakeItems[0].Current;
+        }
 
         public bool IsDirty { get; set; }
 
@@ -52,8 +56,9 @@ namespace ConsoleSnakeGame
                 }
                 else
                 {
+                    //todo nath does it always has value
                     Console.MoveBufferArea(
-                        getSnakeItemPrevPosition(i).x, getSnakeItemPrevPosition(i).y,
+                        getSnakeItemPrevPosition(i).Value.x, getSnakeItemPrevPosition(i).Value.y,
                         1, 1,
                         getSnakeItemCurrentPosition(i).x, getSnakeItemCurrentPosition(i).y);
                 }
@@ -66,7 +71,7 @@ namespace ConsoleSnakeGame
             return m_listSnakeItems[i].Current;
         }
 
-        Point getSnakeItemPrevPosition(int i)
+        Point ? getSnakeItemPrevPosition(int i)
         {
             return m_listSnakeItems[i].Prev;
         }
@@ -77,7 +82,7 @@ namespace ConsoleSnakeGame
             // --- head is in 0 
             for (int i = 1; i < m_listSnakeItems.Count; i++)
             {
-                if(getSnakeItemCurrentPosition(i).IsEqual(Head))
+                if(getSnakeItemCurrentPosition(i).IsEqual(GetHead()))
                 {
                     return true;
                 }
@@ -105,19 +110,19 @@ namespace ConsoleSnakeGame
                 switch (HeadDirection.Value)
                 {
                     case Direction.Down:
-                        Head.y++;
+                        m_listSnakeItems[0].Current.y++;
                         break;
 
                     case Direction.Up:
-                        Head.y--;
+                        m_listSnakeItems[0].Current.y--;
                         break;
 
                     case Direction.Left:
-                        Head.x--;
+                        m_listSnakeItems[0].Current.x--;
                         break;
 
                     case Direction.Right:
-                        Head.x++;
+                        m_listSnakeItems[0].Current.x++;
                         break;
 
                     default:
@@ -136,29 +141,27 @@ namespace ConsoleSnakeGame
             m_listSnakeItems.Add(new SnakeItem {Current = point , WasNeverDraw = true});
         }
 
-        Point getPossiblePointOnDirection(Direction direction)
+        Point  getPossiblePointOnDirection(Direction direction)
         {
-            Point possibleNewPoint = null;
+            Point possibleNewPoint;
             switch (direction)
             {
                 case Direction.Up:
-                    possibleNewPoint = new Point(lastOnBody.x, lastOnBody.y + 1);
+                    possibleNewPoint = new Point { x = lastOnBody.x, y = lastOnBody.y + 1 };
                     break;
 
                 case Direction.Down:
-                    possibleNewPoint = new Point(lastOnBody.x, lastOnBody.y - 1);
+                    possibleNewPoint = new Point { x = lastOnBody.x, y = lastOnBody.y - 1 };
                     break;
 
 
                 case Direction.Left:
-                    possibleNewPoint = new Point(lastOnBody.x + 1, lastOnBody.y);
+                    possibleNewPoint = new Point { x = lastOnBody.x + 1, y = lastOnBody.y };
                     break;
 
                 case Direction.Right:
-                    possibleNewPoint = new Point(lastOnBody.x - 1, lastOnBody.y);
-                    break;
-
                 default:
+                    possibleNewPoint = new Point { x = lastOnBody.x - 1, y=lastOnBody.y };
                     break;
             }
 
@@ -215,24 +218,21 @@ namespace ConsoleSnakeGame
         {
             foreach (SnakeItem snakeItem in m_listSnakeItems)
             {
-                if(snakeItem.Prev == null)
-                {
-                    snakeItem.Prev = new Point();
-                }
-                snakeItem.Prev.x = snakeItem.Current.x;
-                snakeItem.Prev.y = snakeItem.Current.y;
+                //todo nath , why can not set ??
+                snakeItem.Prev = new Point { x = snakeItem.Current.x, y = snakeItem.Current.y };
             }
 
             // --- order is important , start from last
             for (int i = m_listSnakeItems.Count -1 ; i > 0  ; i--)
             {
-                getSnakeItemCurrentPosition(i).x = getSnakeItemCurrentPosition(i - 1).x;
-                getSnakeItemCurrentPosition(i).y = getSnakeItemCurrentPosition(i - 1).y;
+                m_listSnakeItems[i].Current.x = getSnakeItemCurrentPosition(i - 1).x;
+                m_listSnakeItems[i].Current.y = getSnakeItemCurrentPosition(i - 1).y;
             }
         }
 
+
         private List<SnakeItem> m_listSnakeItems;
-        public Point Head { get; private set; }
+        //public Point Head { get; private set; }
         private ColorChar m_colorHead, m_colorTail;
         readonly private float m_OriginalUpdatePeriodSec;
         public float CurrentUpdatePeriodSec { get; set; }

@@ -15,11 +15,7 @@ namespace GameGeneric
 
         public void Write(Point point)
         {
-            Console.SetCursorPosition(point.x, point.y);
-            Console.BackgroundColor = backgroundColor;
-            Console.ForegroundColor = color;
-            Console.Write(text);
-            Console.ResetColor();
+            Utils.Write(text.ToString(), point, backgroundColor, color);
         }
 
         public char text { get; set; }

@@ -6,11 +6,15 @@ using System.Text;
 namespace ConsoleSnakeGame
 {
     // --- put here final , result , time , ....
+    // --- todo , move to game generic ?? or ui common ??
     public class TextOutput : IGameObject
     {
-        public TextOutput(Point pointTopLeft)
+        public TextOutput(TextOutputInfo info)
         {
-            TopLeft = pointTopLeft;
+            TopLeft = info.TopLeft;
+            m_backgroundColor = info.BackgroundColor;
+            m_color = info.Color;
+
             m_listMessages = new List<string>();
         }
 
@@ -20,12 +24,15 @@ namespace ConsoleSnakeGame
         public void Draw()
         {
             int x= TopLeft.x, y = TopLeft.y;
+            Console.BackgroundColor = m_backgroundColor;
+            Console.ForegroundColor = m_color;
             foreach (string message in m_listMessages)
             {
                 Console.SetCursorPosition(x, y);
                 Console.Write(message);
                 y++;
             }
+            Console.ResetColor();
         }
 
         public void AddMessage(string strMessage)
@@ -37,12 +44,15 @@ namespace ConsoleSnakeGame
         public void Clear()
         {
             int x = TopLeft.x, y = TopLeft.y;
+            Console.BackgroundColor = m_backgroundColor;
+            Console.ForegroundColor = m_color;
             foreach (string message in m_listMessages)
             {
                 Console.SetCursorPosition(x, y);
                 Console.Write(new string(' ', message.Length));
                 y++;
             }
+            Console.ResetColor();
             m_listMessages.Clear();
             IsDirty = true;
         }
@@ -53,6 +63,8 @@ namespace ConsoleSnakeGame
         }
 
         Point TopLeft;
+        private ConsoleColor m_backgroundColor;
+        private ConsoleColor m_color;
         List<string> m_listMessages;
     }
 }
