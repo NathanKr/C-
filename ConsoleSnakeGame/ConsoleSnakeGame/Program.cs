@@ -21,14 +21,14 @@ namespace ConsoleSnakeGame
                 BoardTopLeft = new Point(0, 0),
                 BoardBottomRight = new Point(80, 20),
                 ColorBorder = new ColorChar(
-                    '.' , 
-                    ConsoleColor.Yellow,
+                    '■', 
+                    ConsoleColor.Blue,
                     ConsoleColor.Black) };
 
             SnakeInfo snakeInfo = new SnakeInfo {
                 SnakeHead = new Point(50, 10),
                 ColorHead = new ColorChar(
-                    'O',
+                    'Q',
                     ConsoleColor.Red, 
                     ConsoleColor.Black),
                 ColorTail = new ColorChar(

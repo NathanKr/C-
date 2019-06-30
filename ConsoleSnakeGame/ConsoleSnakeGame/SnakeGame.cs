@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Media;
 using System.Text;
 
 namespace ConsoleSnakeGame
@@ -31,8 +32,12 @@ namespace ConsoleSnakeGame
             userInput = new UserInputComponent();
 
             m_soundComponent = new SoundComponent();
-            m_soundComponent.SoundPlayer.SoundLocation =
-                Path.Combine(Constants.SOUND_DIR, Constants.SOUND_FILE);
+            m_soundEat = m_soundComponent.CreateSoundPlayer();
+            m_soundEat.SoundLocation =
+                Path.Combine(Constants.SOUND_DIR, Constants.SOUND_EAT_FILE);
+            m_soundDeath = m_soundComponent.CreateSoundPlayer();
+            m_soundDeath.SoundLocation =
+                Path.Combine(Constants.SOUND_DIR, Constants.SOUND_DEATH_FILE);
 
             m_storageBestResult = new BestResultStorage(Constants.BEST_RESULTS_FILE); ;
         }
@@ -125,7 +130,7 @@ namespace ConsoleSnakeGame
             switch (collision)
             {
                 case SnakeCollision.Apple:
-                    m_soundComponent.SoundPlayer.Play();
+                   m_soundEat.Play();
 
                     // --- todo notice that new position can be same as snake , fix this !!!!!!
                     Point topLeftInsideBorder =
@@ -155,6 +160,7 @@ namespace ConsoleSnakeGame
                 case SnakeCollision.Border:
                 case SnakeCollision.Snake:
                     gameEnd = true;
+                    m_soundDeath.Play();
                     m_textOutput.AddMessage($"Collision with {collision}");
                     m_textOutput.AddMessage("Game end");
                     m_textOutput.IsDirty = true;
@@ -178,6 +184,8 @@ namespace ConsoleSnakeGame
         readonly int resultMargin = 2;
         int m_nCurrentApplesScore;
         int m_nBestApplesScore;
+        private SoundPlayer m_soundDeath;
         BestResultStorage m_storageBestResult;
+        SoundPlayer m_soundEat;
     }
 }

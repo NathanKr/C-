@@ -4,11 +4,9 @@ namespace GameGeneric
 {
     public class SoundComponent
     {
-        public SoundComponent()
+        public SoundPlayer CreateSoundPlayer()
         {
-            SoundPlayer = new SoundPlayer();
+            return new SoundPlayer();
         }
-
-        public SoundPlayer SoundPlayer { get; set; }
     }
 }
