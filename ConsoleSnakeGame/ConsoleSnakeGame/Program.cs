@@ -9,7 +9,7 @@ namespace ConsoleSnakeGame
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
-            int nBoardOffset = 1;
+            int nBoardOffset = 2;
             ConsoleColor bacgroundColor = ConsoleColor.Black;
 
             Console.SetWindowSize(
@@ -59,8 +59,9 @@ namespace ConsoleSnakeGame
 
             TextOutputInfo textOutputInfo = new TextOutputInfo{
                 TopLeft = new Point { 
-                x=boardInfo.BoardTopLeft.x + 1,
-                y=boardInfo.BoardTopLeft.y - 1},
+                x=boardInfo.BoardTopLeft.x + nBoardOffset,
+                y=boardInfo.BoardTopLeft.y - nBoardOffset
+                },
                 Color = ConsoleColor.Red,
                 BackgroundColor = bacgroundColor
             };

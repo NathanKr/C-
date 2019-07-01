@@ -11,15 +11,28 @@ namespace GameGeneric
         /// non blocking
         /// </summary>
         /// <returns></returns>
-        public Direction? GetDirection()
+        public ConsoleKeyInfo ? GetKey()
         {
-            Direction? direction = null;
-
             if (Console.KeyAvailable)
             {
                 bool notDisplayPressedKey = true;
-                ConsoleKeyInfo info = Console.ReadKey(notDisplayPressedKey);
-                switch (info.Key)
+                return Console.ReadKey(notDisplayPressedKey);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// non blocking
+        /// </summary>
+        /// <returns></returns>
+        public static Direction ? GetDirection(ConsoleKeyInfo? keyInfo)
+        {
+            Direction? direction = null;
+
+            if (keyInfo.HasValue)
+            {
+                switch (keyInfo.Value.Key)
                 {
                     case ConsoleKey.LeftArrow:
                         direction = Direction.Left;

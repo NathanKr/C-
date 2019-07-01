@@ -13,6 +13,7 @@
 <li>Use game loop -> game design pattern , e.g. no Thread.Sleep is used</li>
 <li>Use update -> game design pattern</li>
 <li>Use component -> game design pattern</li>
+<li>Use state -> design pattern</li>
 <li>game design pattern used are described here https://gameprogrammingpatterns.com/</li>
 </ul>
 

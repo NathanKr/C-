@@ -49,6 +49,7 @@
     <Compile Include="BoardInfo.cs" />
     <Compile Include="Border.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="GameState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Snake.cs" />

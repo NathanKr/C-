@@ -26,6 +26,7 @@ namespace ConsoleSnakeGame
             m_colorHead = info.ColorHead;
             m_colorTail = info.ColorTail;
             CurrentUpdatePeriodSec = m_OriginalUpdatePeriodSec = info.UpdatePeriodSec;
+            Stop = false;
         }
 
         public Point GetHead()
@@ -95,12 +96,15 @@ namespace ConsoleSnakeGame
         {
             return m_accumulatedUpdatePeriodSec > CurrentUpdatePeriodSec; 
         }
-        
+
+
+        public bool Stop { get; set; }
+
         public void Update(GameTime gameTime)
         {
             m_accumulatedUpdatePeriodSec += gameTime.ElaspedSienceLastUpdateSec;
 
-            if (HeadDirection.HasValue && timeToUpdate())
+            if (HeadDirection.HasValue && timeToUpdate() && !Stop)
             {
                 m_accumulatedUpdatePeriodSec = 0;
                 IsDirty = true;// snake is dirty on every time to update
