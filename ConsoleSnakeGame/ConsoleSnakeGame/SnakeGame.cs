@@ -1,4 +1,5 @@
 ﻿using GameGeneric;
+using GameGeneric;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -80,7 +81,8 @@ namespace ConsoleSnakeGame
             // --- result must be at the end so it can handle gameEnd
             m_listGameObjects.Add(m_textOutput);
             m_border.IsDirty = m_apple.IsDirty = m_snake.IsDirty = m_textOutput.IsDirty = true;
-            m_nCurrentApplesScore = 0;
+            m_CurrentApplesResult.Score = 0;
+            m_textOutput.AddMessage($"Welcome {m_CurrentApplesResult.PlayerName}");
             m_textOutput.AddMessage(@"Hit Left\Right\Up\Down arrows to move snake");
             m_gameState = GameState.Playing;
         }
@@ -93,14 +95,29 @@ namespace ConsoleSnakeGame
             m_soundDeath = m_soundComponent.CreateSoundPlayer();
             m_soundDeath.SoundLocation =
                 Path.Combine(Constants.SOUND_DIR, Constants.SOUND_DEATH_FILE);
-            List<string> list = m_storageBestResult.Read();
+            List<Result> list = m_storageBestResult.Read();
             if (list.Count == 1)
             {
-                m_nBestApplesScore = int.Parse(list[0]);
+                m_BestApplesResult = list[0];
             }
+
+            readPlayerName();
         }
 
-        
+        private void readPlayerName()
+        {
+            string strPlayerName;
+            bool bIsVisible = Console.CursorVisible;
+            Console.CursorVisible = true;
+            do
+            {
+                Console.WriteLine("Please insert your name and hit Enter");
+                strPlayerName = Console.ReadLine();
+            } while (strPlayerName.Length == 0);
+            Console.CursorVisible = bIsVisible;
+            m_CurrentApplesResult.PlayerName= strPlayerName;
+        }
+
 
         bool isCollision(Point point)
         {
@@ -152,10 +169,10 @@ namespace ConsoleSnakeGame
                     m_soundDeath.Play();
                     m_textOutput.AddMessage("Do you want to play again : Y/N");
                     m_key = ' ';
-                    m_gameState = GameState.WaitForUserInputPlayAgain;
+                    m_gameState = GameState.UserInputPlayAgain;
                     break;
 
-                case GameState.WaitForUserInputPlayAgain:
+                case GameState.UserInputPlayAgain:
                     if (m_key == 'y')
                     {
                         initBeforeEveryGame();
@@ -185,9 +202,13 @@ namespace ConsoleSnakeGame
 
         }
 
+        string getPlayerScore(Result result)
+        {
+            return $"score : {result.Score} by {result.PlayerName}";
+        }
         string getScoreMessage()
         {
-            return $"Best score : {m_nBestApplesScore} , Current score : {m_nCurrentApplesScore}";
+            return $"Best {getPlayerScore(m_BestApplesResult)} , {getPlayerScore(m_CurrentApplesResult)}";
         }
         private void handleCollisionWithSnake(SnakeCollision collision)
         {
@@ -209,13 +230,13 @@ namespace ConsoleSnakeGame
                     if (!isCollision(possibleSnakeTailPoint))
                     {
                         m_snake.AddToTail(possibleSnakeTailPoint);
-                        m_nCurrentApplesScore += 10;
+                        m_CurrentApplesResult.Score += 10;
                         m_snake.CurrentUpdatePeriodSec = 
                             m_snake.CurrentUpdatePeriodSec * (1-Constants.GROW_PERCENT/100f);
-                        if (m_nCurrentApplesScore > m_nBestApplesScore)
+                        if (m_CurrentApplesResult.Score > m_BestApplesResult.Score)
                         {
-                            m_storageBestResult.Write(m_nCurrentApplesScore);
-                            m_nBestApplesScore = m_nCurrentApplesScore;
+                            m_storageBestResult.Write(m_CurrentApplesResult);
+                            m_BestApplesResult = m_CurrentApplesResult;
                         }
                         m_textOutput.Clear();
                         m_textOutput.AddMessage(getScoreMessage());
@@ -249,8 +270,8 @@ namespace ConsoleSnakeGame
         UserInputComponent m_userInput;
         SoundComponent m_soundComponent;
         Direction? m_directionSnakeHead;
-        int m_nCurrentApplesScore;
-        int m_nBestApplesScore;
+        Result m_CurrentApplesResult;
+        Result m_BestApplesResult;
         private SoundPlayer m_soundDeath;
         BestResultStorage m_storageBestResult;
         SoundPlayer m_soundEat;

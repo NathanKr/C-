@@ -9,7 +9,7 @@ namespace ConsoleSnakeGame
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
-            Console.Title = "Snake game by Nathan Krasney";
+            Console.Title = "Snake game by Nathan Krasney 2019";
             int nBoardOffset = 2;
             ConsoleColor bacgroundColor = ConsoleColor.Black;
 
@@ -17,10 +17,6 @@ namespace ConsoleSnakeGame
                 Constants.BOARD_WIDTH + 2 * nBoardOffset,
                 Constants.BOARD_HEIGHT + 2 * nBoardOffset);
 
-            //int nWindowLeft = (Console.LargestWindowWidth - Console.WindowWidth) / 2,
-            //    nWindowTop = (Console.LargestWindowHeight - Console.WindowHeight) / 2;
-
-            //Console.SetWindowPosition(nWindowLeft, nWindowTop);
 
             BoardInfo boardInfo = new BoardInfo
             {

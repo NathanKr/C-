@@ -14,7 +14,7 @@ namespace ConsoleSnakeGame
         public static readonly string BEST_RESULTS_FILE = "best-results.txt";
         public static readonly int INITIAL_SNAKE_BODY_COUNT = 4;
         public static readonly int GROW_PERCENT = 3;
-        public static readonly int BOARD_WIDTH = 60;
+        public static readonly int BOARD_WIDTH = 70;
         public static readonly int BOARD_HEIGHT = 30;
 
     }

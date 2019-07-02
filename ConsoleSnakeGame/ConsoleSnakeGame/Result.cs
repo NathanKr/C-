@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleSnakeGame
 {
-    enum GameState
+    struct Result
     {
-        Playing,
-        Collision,
-        Finish,
-        UserInputPlayAgain,
-        End
+        public int Score;
+        public string PlayerName;
     }
 }

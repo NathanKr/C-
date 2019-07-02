@@ -13,12 +13,11 @@
 <li>Use game loop -> game design pattern , e.g. no Thread.Sleep is used</li>
 <li>Use update -> game design pattern</li>
 <li>Use component -> game design pattern</li>
-<li>Use state -> design pattern</li>
+<li>Use state </li>
 <li>game design pattern used are described here https://gameprogrammingpatterns.com/</li>
 </ul>
 
 <h2>Todo</h2>
 <ul>
-<li>reduce the screen to match the board</li>
-<li>allow to play again</li>
+<li>position the console window -> is it possible ???</li>
 </ul>

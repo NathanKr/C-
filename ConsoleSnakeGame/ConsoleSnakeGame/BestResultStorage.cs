@@ -9,23 +9,24 @@ namespace ConsoleSnakeGame
 {
     class BestResultStorage
     {
+
         public BestResultStorage(string strFileName)
         {
             this.strFileName = strFileName;
         }
 
-        public void Write(int bestResult)
+        public void Write(Result bestResult)
         {
             bool bAppend = false;
             using (StreamWriter writer = new StreamWriter(strFileName, bAppend))
             {
-                writer.WriteLine(bestResult);
+                writer.WriteLine($"{bestResult.PlayerName}{m_cSeperator}{bestResult.Score}");
             }
         }
 
-        public List<string> Read()
+        public List<Result> Read()
         {
-            List<string> list = new List<string>();
+            List<Result> list = new List<Result>();
             string strLine;
             if (File.Exists(strFileName))
             {
@@ -38,7 +39,14 @@ namespace ConsoleSnakeGame
                         {
                             break;
                         }
-                        list.Add(strLine);
+                        string [] arLines = strLine.Split(m_cSeperator);
+                        if(arLines.Length == 2)
+                        {
+                            list.Add(new Result {
+                                PlayerName = arLines[0] ,
+                                Score = int.Parse(arLines[1])
+                            });
+                        }
                     }
                 }
             }
@@ -46,5 +54,6 @@ namespace ConsoleSnakeGame
         }
 
         private string strFileName;
+        const char m_cSeperator = ',';
     }
 }
