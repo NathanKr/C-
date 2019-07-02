@@ -30,18 +30,5 @@ namespace UnitTestSnake
             snake.AddToTail(new Point { x = snake.GetHead().x, y = snake.GetHead().y + 2 });
             Assert.IsFalse(snake.IsCollisionWithHead());
         }
-
-
-        //[TestMethod]
-        //public void TestSnakeSelfCollisionTrue()
-        //{
-        //    Snake snake = new Snake(snakeInfo);
-        //    snake.AddToTail(new Point { x = snake.GetHead().x, y = snake.GetHead().y + 1 });
-        //    snake.AddToTail(new Point { x = snake.GetHead().x, y = snake.GetHead().y + 2 });
-        //    snake.GetHead().y = snake.GetHead().y + 1;
-        //    Assert.IsTrue(snake.IsCollisionWithHead());
-        //}
-
-
     }
 }
