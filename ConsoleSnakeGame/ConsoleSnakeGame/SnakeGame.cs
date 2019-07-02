@@ -80,6 +80,7 @@ namespace ConsoleSnakeGame
             // --- result must be at the end so it can handle gameEnd
             m_listGameObjects.Add(m_textOutput);
             m_border.IsDirty = m_apple.IsDirty = m_snake.IsDirty = m_textOutput.IsDirty = true;
+            m_nCurrentApplesScore = 0;
             m_textOutput.AddMessage(@"Hit Left\Right\Up\Down arrows to move snake");
             m_gameState = GameState.Playing;
         }
@@ -148,7 +149,6 @@ namespace ConsoleSnakeGame
                 case GameState.Finish:
                     m_textOutput.Clear();
                     m_textOutput.AddMessage("Game Finish ! " + getScoreMessage());
-                    // -- play sync so we will know when it is finished
                     m_soundDeath.Play();
                     m_textOutput.AddMessage("Do you want to play again : Y/N");
                     m_key = ' ';
@@ -200,7 +200,10 @@ namespace ConsoleSnakeGame
                         new Point { x = m_border.TopLeft.x + 1, y = m_border.TopLeft.y + 1 };
                     Point bottomRightInsideBorder =
                         new Point {x= m_border.BottomRight.x - 1, y = m_border.BottomRight.y - 1 };
-                    m_apple.Head = Utils.GetRandPoint(topLeftInsideBorder, bottomRightInsideBorder);
+                    m_apple.Head = Utils.GetRandPoint(
+                        topLeftInsideBorder, 
+                        bottomRightInsideBorder,
+                        m_snake.GetHead());
                     m_apple.IsDirty = true;
                     Point possibleSnakeTailPoint = m_snake.Grow();
                     if (!isCollision(possibleSnakeTailPoint))
@@ -246,7 +249,6 @@ namespace ConsoleSnakeGame
         UserInputComponent m_userInput;
         SoundComponent m_soundComponent;
         Direction? m_directionSnakeHead;
-        //readonly int resultMargin = 2;
         int m_nCurrentApplesScore;
         int m_nBestApplesScore;
         private SoundPlayer m_soundDeath;
