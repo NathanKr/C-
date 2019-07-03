@@ -20,4 +20,7 @@
 <h2>Todo</h2>
 <ul>
 <li>position the console window -> is it possible ???</li>
+<li>add version on title</li>
+<li>add hearts on new record and some animation</li>
+<li>add wining wav on new record</li>
 </ul>
