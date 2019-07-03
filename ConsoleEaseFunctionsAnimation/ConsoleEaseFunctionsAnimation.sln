@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleEaseFunctionsAnimation", "ConsoleEaseFunctionsAnimation\ConsoleEaseFunctionsAnimation.csproj", "{8E16BE6B-48CD-4F3B-AD6A-E3703B000C99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "UnitTestProject\UnitTestProject.csproj", "{AC5D70FA-0070-4903-82C6-CD75F41D7E51}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E16BE6B-48CD-4F3B-AD6A-E3703B000C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E16BE6B-48CD-4F3B-AD6A-E3703B000C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E16BE6B-48CD-4F3B-AD6A-E3703B000C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E16BE6B-48CD-4F3B-AD6A-E3703B000C99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC5D70FA-0070-4903-82C6-CD75F41D7E51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC5D70FA-0070-4903-82C6-CD75F41D7E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC5D70FA-0070-4903-82C6-CD75F41D7E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC5D70FA-0070-4903-82C6-CD75F41D7E51}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF89453B-C293-4804-AA92-4E246E17FCD0}
+	EndGlobalSection
+EndGlobal
