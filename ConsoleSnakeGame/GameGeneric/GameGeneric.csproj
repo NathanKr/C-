@@ -46,7 +46,6 @@
     <Compile Include="Console\GraphicComponent.cs" />
     <Compile Include="Console\UserInputComponent.cs" />
     <Compile Include="Direction.cs" />
-    <Compile Include="EaseFunctions.cs" />
     <Compile Include="GameLoop.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="IGameObject.cs" />
