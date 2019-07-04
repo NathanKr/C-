@@ -13,6 +13,8 @@ namespace ConsoleSnakeGame
             BoardInfo boardInfo, SnakeInfo snakeInfo, 
             AppleInfo appleInfo , TextOutputInfo textOutputInfo)
         {
+            // --- support e.g. hearts
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
             m_listGameObjects = new List<IGameObject>();
             m_userInput = new UserInputComponent();
             m_soundComponent = new SoundComponent();
@@ -69,6 +71,7 @@ namespace ConsoleSnakeGame
         private void initBeforeEveryGame()
         {
             Console.Clear();
+            m_bNewBestResult = false;
             m_border = new Border(m_boardInfo);
             m_snake = new Snake(m_snakeInfo);
             m_apple = new Apple(m_appleInfo);
@@ -86,15 +89,20 @@ namespace ConsoleSnakeGame
             m_gameState = GameState.Playing;
         }
 
+        SoundPlayer createSoundPlayer(string strFileName)
+        {
+            string strLocation = Path.Combine(Constants.SOUND_DIR, strFileName);
+            SoundPlayer player = m_soundComponent.CreateSoundPlayer();
+            player.SoundLocation = strLocation;
+            return player;
+        }
         private void initOnce()
         {
-            m_soundEat = m_soundComponent.CreateSoundPlayer();
-            m_soundEat.SoundLocation =
-                Path.Combine(Constants.SOUND_DIR, Constants.SOUND_EAT_FILE);
-            m_soundDeath = m_soundComponent.CreateSoundPlayer();
-            m_soundDeath.SoundLocation =
-                Path.Combine(Constants.SOUND_DIR, Constants.SOUND_DEATH_FILE);
-            List<Result> list = m_storageBestResult.Read();
+            m_soundEat = createSoundPlayer(Constants.SOUND_EAT_FILE);
+            m_soundDeath = createSoundPlayer(Constants.SOUND_DEATH_FILE);
+            m_soundWin = createSoundPlayer(Constants.SOUND_WIN_FILE);
+
+            List <Result> list = m_storageBestResult.Read();
             if (list.Count == 1)
             {
                 m_BestApplesResult = list[0];
@@ -162,10 +170,22 @@ namespace ConsoleSnakeGame
                     handleCollisionWithSnake(m_collision.Value);
                     break;
 
-                case GameState.Finish:
+                case GameState.FinishPlaying:
+                    SoundPlayer player;
+                    string msg;
                     m_textOutput.Clear();
-                    m_textOutput.AddMessage("Game Finish ! " + getScoreMessage());
-                    m_soundDeath.Play();
+                    if (m_bNewBestResult)
+                    {
+                        player = m_soundWin;
+                        msg = "Game Finish ! New Record ♥♥♥ " + getPlayerScore(m_BestApplesResult);
+                    }
+                    else
+                    {
+                        player = m_soundDeath;
+                        msg = "Game Finish ! " + getScoreMessage();
+                    }
+                    m_textOutput.AddMessage(msg);
+                    player.Play();
                     m_textOutput.AddMessage("Do you want to play again : Y/N");
                     m_key = ' ';
                     m_gameState = GameState.UserInputPlayAgain;
@@ -236,6 +256,7 @@ namespace ConsoleSnakeGame
                         {
                             m_storageBestResult.Write(m_CurrentApplesResult);
                             m_BestApplesResult = m_CurrentApplesResult;
+                            m_bNewBestResult = true;
                         }
                         m_textOutput.Clear();
                         m_textOutput.AddMessage(getScoreMessage());
@@ -245,7 +266,7 @@ namespace ConsoleSnakeGame
 
                 case SnakeCollision.Border:
                 case SnakeCollision.Snake:
-                    m_gameState = GameState.Finish;
+                    m_gameState = GameState.FinishPlaying;
                     break;
 
 
@@ -271,9 +292,11 @@ namespace ConsoleSnakeGame
         Direction? m_directionSnakeHead;
         Result m_CurrentApplesResult;
         Result m_BestApplesResult;
-        private SoundPlayer m_soundDeath;
         BestResultStorage m_storageBestResult;
         SoundPlayer m_soundEat;
+        SoundPlayer m_soundDeath;
+        SoundPlayer m_soundWin;
+        bool m_bNewBestResult;
         GameState m_gameState;
         SnakeCollision? m_collision;
         char m_key;

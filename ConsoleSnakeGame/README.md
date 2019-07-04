@@ -9,7 +9,7 @@
 
 <h2>Points of interests</h2>
 <ul>
-<li>Play music when apple is eaten and when game is over</li>
+<li>Play different music when apple is eaten , game is over , new record</li>
 <li>Use game loop -> game design pattern , e.g. no Thread.Sleep is used</li>
 <li>Use update -> game design pattern</li>
 <li>Use component -> game design pattern</li>
@@ -21,6 +21,5 @@
 <ul>
 <li>position the console window -> is it possible ???</li>
 <li>add version on title</li>
-<li>add hearts on new record and some animation</li>
-<li>add wining wav on new record</li>
+<li>add hearts animation</li>
 </ul>

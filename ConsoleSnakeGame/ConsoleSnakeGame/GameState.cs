@@ -10,7 +10,7 @@ namespace ConsoleSnakeGame
     {
         Playing,
         Collision,
-        Finish,
+        FinishPlaying,
         UserInputPlayAgain,
         End
     }

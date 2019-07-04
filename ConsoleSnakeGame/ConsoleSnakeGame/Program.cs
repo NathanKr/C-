@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using GameGeneric;
 
 namespace ConsoleSnakeGame
@@ -9,7 +8,7 @@ namespace ConsoleSnakeGame
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
-            Console.Title = "Snake game by Nathan Krasney 2019";
+            Console.Title = "Snake game by Nathan Krasney 2019 . version : " + UtilsGeneric.Utils.GetAssemblyFileVersion();
             int nBoardOffset = 2;
             ConsoleColor bacgroundColor = ConsoleColor.Black;
 
